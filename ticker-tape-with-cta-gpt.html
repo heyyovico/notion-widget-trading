@@ -11,22 +11,20 @@
     width: fit-content; /* Adjust the width as needed */
     text-align: center; /* Center-align the content */
     margin: 0 auto; /* Center the black box horizontally */
+    margin-top: 20px; /* Add space between the widget and the button */
+  }
+  
+  /* Adjust the height of the black box */
+  .half-height {
+    max-height: 50vh; /* Half of the viewport height */
+    overflow: auto; /* Add scrollbars if needed */
   }
 </style>
 </head>
 <body>
 
-<!-- A div element with the "black-box" class creates the black box with rounded corners -->
-<div class="black-box">
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank">
-      <span style="color:white; font-weight:bold;">LAUNCH TRADINGVIEW</span>
-    </a>
-  </div>
-</div>
-
 <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
+<div class="tradingview-widget-container half-height">
   <div class="tradingview-widget-container__widget"></div>
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
   {
@@ -61,6 +59,15 @@
   </script>
 </div>
 <!-- TradingView Widget END -->
+
+<!-- A div element with the "black-box" class creates the black box with rounded corners -->
+<div class="black-box">
+  <div class="tradingview-widget-copyright">
+    <a href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank">
+      <span style="color:red; font-weight:bold;">LAUNCH TRADINGVIEW</span>
+    </a>
+  </div>
+</div>
 
 </body>
 </html>
