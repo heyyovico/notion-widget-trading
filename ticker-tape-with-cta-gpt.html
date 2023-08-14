@@ -3,17 +3,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
   }
   
   .custom-box {
     background-color: black;
     color: white;
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin-top: 5px;
+    padding: 8px 20px;
+    border-radius: 6px;
+    margin-top: 10px;
     cursor: pointer;
     display: inline-block;
+    text-decoration: none;
+  }
+
+  .custom-box:hover {
+    opacity: 0.8;
   }
 </style>
 
@@ -52,11 +57,9 @@
     }
   </script>
   <div class="custom-container">
-    <div class="custom-box">
-      <a href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank">
-        LAUNCH TRADINGVIEW
-      </a>
-    </div>
+    <a class="custom-box" href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank">
+      LAUNCH TRADINGVIEW
+    </a>
   </div>
 </div>
 <!-- TradingView Widget END -->
