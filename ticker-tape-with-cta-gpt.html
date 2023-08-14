@@ -1,80 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
 <style>
-  /* Styling for the black box */
-  .black-box {
-    background-color: black;
-    color: white;
-    border-radius: 10px;
-    padding: 10px; /* Adjust padding for height */
-    width: fit-content; /* Adjust the width as needed */
-    text-align: center; /* Center-align the content */
-    margin: 0 auto; /* Center the black box horizontally */
-    margin-top: 20px; /* Add space between the widget and the button */
+  .custom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
   }
   
-  /* Adjust the height of the black box */
-  .half-height {
-    max-height: 50vh; /* Half of the viewport height */
-    overflow: auto; /* Add scrollbars if needed */
-  }
-
-  /* Styling for the button link */
-  .launch-button {
-    color: white !important; /* Ensure white color */
-    font-weight: bold;
-    text-decoration: none;
+  .custom-box {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    display: inline-block;
   }
 </style>
-</head>
-<body>
 
 <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container half-height">
+<div class="tradingview-widget-container">
   <div class="tradingview-widget-container__widget"></div>
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-  {
-    "symbols": [
-      {
-        "description": "BTCUSDT",
-        "proName": "BINANCE:BTCUSDT.P"
-      },
-      {
-        "description": "ETHUSDT",
-        "proName": "BINANCE:ETHUSDT.P"
-      },
-      {
-        "description": "USDT DOMINANCE",
-        "proName": "CRYPTOCAP:USDT.D"
-      },
-      {
-        "description": "BTC DOMINANCE",
-        "proName": "CRYPTOCAP:BTC.D"
-      },
-      {
-        "description": "ETH DOMINANCE",
-        "proName": "CRYPTOCAP:ETH.D"
-      }
-    ],
-    "showSymbolLogo": true,
-    "colorTheme": "light",
-    "isTransparent": true,
-    "displayMode": "adaptive",
-    "locale": "en"
-  }
+    {
+      "symbols": [
+        {
+          "description": "BTCUSDT",
+          "proName": "BINANCE:BTCUSDT.P"
+        },
+        {
+          "description": "ETHUSDT",
+          "proName": "BINANCE:ETHUSDT.P"
+        },
+        {
+          "description": "USDT DOMINANCE",
+          "proName": "CRYPTOCAP:USDT.D"
+        },
+        {
+          "description": "BTC DOMINANCE",
+          "proName": "CRYPTOCAP:BTC.D"
+        },
+        {
+          "description": "ETH DOMINANCE",
+          "proName": "CRYPTOCAP:ETH.D"
+        }
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "light",
+      "isTransparent": true,
+      "displayMode": "adaptive",
+      "locale": "en"
+    }
   </script>
-</div>
-<!-- TradingView Widget END -->
-
-<!-- A div element with the "black-box" class creates the black box with rounded corners -->
-<div class="black-box">
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank" class="launch-button">
-      LAUNCH TRADINGVIEW
-    </a>
+  <div class="custom-container">
+    <div class="custom-box">
+      <a href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank">
+        LAUNCH TRADINGVIEW
+      </a>
+    </div>
   </div>
 </div>
-
-</body>
-</html>
+<!-- TradingView Widget END -->
