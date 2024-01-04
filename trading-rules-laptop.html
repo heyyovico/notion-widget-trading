@@ -1,0 +1,61 @@
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Center-align the button's text */
+  }
+
+  .custom-box {
+    background-color: black;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px; /* Adjusted margin for spacing */
+  }
+
+  .custom-box a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .custom-box:hover {
+    opacity: 0.8;
+  }
+
+  /* Added styling for the image */
+  .image-container {
+    max-width: 175px; /* Adjust the maximum width as needed */
+    margin-bottom: 10px; /* Add some spacing between the image and the button */
+    display: flex;
+    justify-content: center; /* Center-align the image horizontally */
+  }
+  
+  .image-container img {
+    width: 150%; /* Increase width by 50 */
+    height: 200%; /* Double the height of the image */
+  }
+</style>
+<div class="container">
+  <div class="image-container">
+    <img src="https://github.com/heyyovico/notion-widget-trading/blob/main/Notion%20Image_Face%2003.png?raw=true" alt="Image description">
+  </div>
+  <div class="custom-box">
+    <a href="https://www.notion.so/heyyovico/Trading-Rules-0a6c13220f8b4328b8ca771c5d2104c8?pvs=4" rel="noopener nofollow" onclick="openInNewTab('https://www.notion.so/heyyovico/Trading-Rules-0a6c13220f8b4328b8ca771c5d2104c8?pvs=4'); return false;">
+      TRADING RULES
+    </a>
+  </div>
+</div>
+
+<script>
+  function openInNewTab(url) {
+    var newTab = window.open(url, '_blank');
+    newTab.focus();
+  }
+</script>
