@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .home-button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0074D9;
+            color: #FFF;
+            cursor: pointer;
+        }
+
+        .nested-buttons {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+        }
+
+        .home-button:hover .nested-buttons {
+            display: block;
+        }
+
+        .nested-button {
+            display: block;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #FFF;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-button">
+        Home
+        <div class="nested-buttons">
+            <a href="https://www.investagrams.com/Tools/PrimeAnalytics" class="nested-button">Investagrams Prime Analytics</a>
+            <a href="https://app.kreioslabs.com/dashboard" class="nested-button">KreiosLabs Dashboard</a>
+            <!-- Add more nested buttons as needed -->
+        </div>
+    </div>
+</body>
+</html>
