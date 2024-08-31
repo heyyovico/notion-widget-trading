@@ -9,14 +9,15 @@
   .custom-box {
     background-color: transparent; /* Transparent background */
     color: #333; /* Dark text for readability */
-    padding: 8px 14px; /* Adjusted padding for equal spacing */
-    border: 2px solid #ccc; /* Outset border appearance */
-    border-radius: 12px; /* More rounded corners */
+    padding: 12px 18px; /* Adjusted padding for balanced spacing */
+    border: 1px solid #ccc; /* Thinner border */
+    border-radius: 6px; /* Less rounded corners */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 12px; /* Adjust font size to match TradingView widget */
+    font-size: 24px; /* Doubled font size */
     font-weight: bold; /* Bold font */
     text-align: center;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
     box-sizing: border-box;
     text-decoration: none;
@@ -26,6 +27,12 @@
   .custom-box:hover {
     background-color: rgba(225, 225, 225, 0.7); /* Light gray on hover for better visibility */
     opacity: 0.9;
+  }
+
+  .custom-box svg {
+    width: 24px; /* Adjusted SVG size */
+    height: 24px;
+    margin-right: 8px; /* Space between logo and text */
   }
 </style>
 
@@ -73,6 +80,10 @@
   </script>
   <div class="custom-container">
     <a class="custom-box" href="https://www.tradingview.com/chart/KusqBn8P/?symbol=BINANCE%3ABTCUSDT.P" rel="noopener nofollow" target="_blank">
+      <!-- Inline SVG TradingView Logo -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#1C1C1C">
+        <path d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm4.947 13.684a4.005 4.005 0 01-3.894 3.58h-.052l-1.947-.005c-2.21 0-4 1.79-4 4s1.79 4 4 4c.335 0 .664-.042.984-.127a2 2 0 011.032 3.866 7.952 7.952 0 01-2.016.261c-4.411 0-8-3.589-8-8s3.589-8 8-8h.055c1.978.02 3.681 1.413 3.97 3.361a2 2 0 01-1.987 2.266z"/>
+      </svg>
       TradingView
     </a>
   </div>
