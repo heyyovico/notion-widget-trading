@@ -3,36 +3,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px; /* Reduced space between button and widget */
+    margin-top: 10px;
+    width: 100%; /* Set width */
+    height: auto; /* Set height to auto to allow the widget to fit naturally */
   }
 
   .custom-box {
-    background-color: black; /* Black background */
-    color: white; /* White text color */
-    padding: 6px 10px; /* Slightly reduced padding */
-    border: 2px solid black; /* Black border */
-    border-radius: 8px; /* Rounded corners */
+    background-color: black;
+    color: white;
+    padding: 6px 10px;
+    border: 2px solid black;
+    border-radius: 8px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, Inter, sans-serif;
-    font-size: 14px; /* Reduced font size */
-    font-weight: bold; /* Bold text */
+    font-size: 14px;
+    font-weight: bold;
     text-align: center;
     display: inline-flex;
     align-items: center;
     cursor: pointer;
     box-sizing: border-box;
     text-decoration: none;
-    letter-spacing: 0.5px; /* Letter spacing */
-    transition: background-color 0.1s, border-color 0.1s; /* Smooth transition */
+    letter-spacing: 0.5px;
+    transition: background-color 0.1s, border-color 0.1s;
   }
 
   .custom-box:hover {
-    background-color: #333; /* Darker background on hover */
-    border-color: #333; /* Match border color with background on hover */
+    background-color: #333;
+    border-color: #333;
   }
 </style>
 
 <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
+<div class="tradingview-widget-container" style="width: 100%; height: auto;">
   <div class="tradingview-widget-container__widget"></div>
   <script src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
     {
