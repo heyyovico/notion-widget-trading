@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image Display</title>
+    <style>
+        /* Style for the image display */
+        #imageContainer {
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            margin-top: 20px;
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+    </style>
+    <script>
+        // Array to hold the image URLs
+        const images = [
+            'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Side%20-%20Up.svg',
+            'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Side%20-%20Down.svg'
+        ];
+        
+        let currentIndex = 0; // Start with the first image
+
+        // Function to change the image when clicked
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % images.length; // Loop back to the first image
+            document.getElementById("imageContainer").src = images[currentIndex];
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Image container to display the selected image -->
+    <img id="imageContainer" src="https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Side%20-%20Up.svg" alt="Side / Up" onclick="showNextImage()">
+
+</body>
+</html>
