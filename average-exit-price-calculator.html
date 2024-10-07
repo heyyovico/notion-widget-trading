@@ -1,152 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f9f9f9; /* Light background color */
-            padding: 20px; /* Padding around the body */
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-            gap: 10px; /* Gap between elements */
-        }
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+  }
 
-        .row {
-            display: flex;
-            gap: 5px; /* Reduced gap between input boxes */
-            width: 100%; /* Full width for rows */
-            max-width: 600px; /* Set a maximum width */
-        }
+  .row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: space-between;
+  }
 
-        .custom-box {
-            background-color: #fff; /* Pure white background */
-            color: #000; /* Black font color */
-            border: 1px solid #e0e0e0; /* Light border for subtle definition */
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-            flex: 1; /* Make the box take available space */
-            padding: 4px; /* Reduced padding */
-        }
+  .label-box {
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #000;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
 
-        .custom-box input {
-            border: none;
-            outline: none;
-            flex: 1; /* Make the input take available space */
-            padding: 8px; /* Standard padding */
-            font-size: 14px;
-            border-radius: 6px; /* Rounded corners for input */
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Inner shadow for input */
-        }
+  .input-box {
+    background-color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+    text-align: center;
+  }
 
-        .result {
-            background-color: #f0f8ff; /* Light blue for result box */
-            padding: 8px; /* Adjusted padding */
-            border-radius: 6px;
-            flex: 1; /* Result box takes available space */
-            text-align: center; /* Center text in result box */
-            font-weight: bold; /* Bold text */
-        }
+  .result-box {
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border-radius: 6px;
+    width: 320px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-weight: bold;
+  }
 
-        #resetButton {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 10px; /* Margin on top of button */
-        }
+  .clear-btn {
+    background-color: #000;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+  }
 
-        #resetButton:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-        }
-    </style>
-</head>
-<body>
+  .clear-btn:hover {
+    background-color: #333;
+  }
+
+  .clear-btn i {
+    margin-right: 10px;
+  }
+</style>
 
 <div class="container">
-    <div class="row">
-        <div class="custom-box">Allocation</div>
-        <div class="custom-box">Allocation</div>
-        <div class="custom-box">Allocation</div>
-    </div>
-    
-    <div class="row">
-        <div class="custom-box"><input type="number" id="alloc1" placeholder="0%"></div>
-        <div class="custom-box"><input type="number" id="alloc2" placeholder="0%"></div>
-        <div class="custom-box"><input type="number" id="alloc3" placeholder="0%"></div>
-    </div>
+  <div class="row">
+    <div class="label-box">Allocation (%)</div>
+    <input class="input-box" type="text" id="allocation1" placeholder="50%">
+    <input class="input-box" type="text" id="allocation2" placeholder="25%">
+    <input class="input-box" type="text" id="allocation3" placeholder="25%">
+  </div>
 
-    <div class="row">
-        <div class="custom-box">Exit Price</div>
-        <div class="custom-box">Exit Price</div>
-        <div class="custom-box">Exit Price</div>
-    </div>
+  <div class="row">
+    <div class="label-box">Exit Price</div>
+    <input class="input-box" type="text" id="exitPrice1" placeholder="0.0001">
+    <input class="input-box" type="text" id="exitPrice2" placeholder="0.0002">
+    <input class="input-box" type="text" id="exitPrice3" placeholder="0.0003">
+  </div>
 
-    <div class="row">
-        <div class="custom-box"><input type="number" id="price1" placeholder="0"></div>
-        <div class="custom-box"><input type="number" id="price2" placeholder="0"></div>
-        <div class="custom-box"><input type="number" id="price3" placeholder="0"></div>
-    </div>
+  <div class="row">
+    <div class="label-box">Average Exit Price</div>
+    <div class="result-box" id="avgExitPrice">--</div>
+  </div>
 
-    <div class="row">
-        <div class="custom-box">Average Exit Price</div>
-        <div class="custom-box result" id="result"></div>
-    </div>
-    
-    <button id="resetButton">Reset</button>
+  <button class="clear-btn" onclick="clearInputs()">
+    <i class="fas fa-redo-alt"></i>
+    Reset
+  </button>
 </div>
 
 <script>
-    const inputs = [
-        { alloc: document.getElementById("alloc1"), price: document.getElementById("price1") },
-        { alloc: document.getElementById("alloc2"), price: document.getElementById("price2") },
-        { alloc: document.getElementById("alloc3"), price: document.getElementById("price3") },
-    ];
+  function clearInputs() {
+    document.getElementById('allocation1').value = '';
+    document.getElementById('allocation2').value = '';
+    document.getElementById('allocation3').value = '';
+    document.getElementById('exitPrice1').value = '';
+    document.getElementById('exitPrice2').value = '';
+    document.getElementById('exitPrice3').value = '';
+    document.getElementById('avgExitPrice').innerText = '--';
+  }
 
-    inputs.forEach(input => {
-        input.alloc.addEventListener('input', updateResult);
-        input.price.addEventListener('input', updateResult);
-    });
-
-    document.getElementById("resetButton").addEventListener('click', resetFields);
-
-    function updateResult() {
-        let totalAlloc = 0;
-        let weightedPriceSum = 0;
-
-        inputs.forEach(input => {
-            const allocation = parseFloat(input.alloc.value) || 0;
-            const exitPrice = parseFloat(input.price.value) || 0;
-
-            // Only consider non-zero allocations
-            if (allocation > 0) {
-                totalAlloc += allocation;
-                weightedPriceSum += allocation * exitPrice;
-            }
-        });
-
-        const averageExitPrice = totalAlloc > 0 ? (weightedPriceSum / totalAlloc) : 0;
-        document.getElementById("result").textContent = averageExitPrice.toFixed(2);
-    }
-
-    function resetFields() {
-        inputs.forEach(input => {
-            input.alloc.value = '';
-            input.price.value = '';
-        });
-        document.getElementById("result").textContent = '';
-    }
+  // You can add the calculation logic for the Average Exit Price based on allocation here
 </script>
-
-</body>
-</html>
