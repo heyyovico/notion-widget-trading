@@ -3,6 +3,11 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
+  /* Set box-sizing to include padding and borders in total width and height */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -14,7 +19,7 @@
   .row {
     display: flex;
     width: 100%;
-    justify-content: flex-start; /* Ensure consistent alignment */
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
   }
@@ -22,13 +27,16 @@
   .label-box-container {
     background-color: #fff;
     border-radius: 6px;
-    padding: 6px; /* Adjusted padding */
-    width: 150px; /* Consistent width */
-    height: 30px; /* Adjusted height to match placeholder boxes */
+    padding: 6px; /* Standardized padding */
+    width: 150px; /* Standardized width */
+    height: 35px; /* Standardized height */
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Space between Column 1 and Column 2 */
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px; /* Standardized font size */
+    color: #333;
   }
 
   .label-box-container i {
@@ -36,26 +44,19 @@
     font-size: 14px;
   }
 
-  .label-box-container span {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
-  }
-
-  .input-box {
+  .input-box, .result-box {
     background-color: #fff;
     border-radius: 6px;
-    width: 150px; /* Consistent width */
-    height: 30px; /* Adjusted height to match label boxes */
+    padding: 6px; /* Standardized padding */
+    width: 150px; /* Standardized width */
+    height: 35px; /* Standardized height */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 14px; /* Consistent font size */
+    font-size: 14px; /* Standardized font size */
     color: #000;
     margin-right: 10px; /* Consistent horizontal spacing */
-    padding: 6px; /* Adjusted padding */
   }
 
   .input-box:focus {
@@ -63,40 +64,38 @@
   }
 
   .result-box {
-    background-color: #fff;
-    border-radius: 6px;
-    width: 150px; /* Consistent width */
-    height: 30px; /* Adjusted height to match label boxes */
-    border: 1px solid #dcdcdc;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400; /* Match font weight with input boxes */
-    font-size: 14px; /* Match font size with input boxes */
-    color: #000;
-    margin-right: 10px; /* Ensure consistent spacing */
-    padding: 6px; /* Adjusted padding */
+    font-weight: 600; /* Bold font for results */
+    font-size: 16px; /* Standardized font size for results */
   }
 
   .reset-btn {
     background-color: #000;
     color: white;
+    padding: 6px; /* Standardized padding */
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 14px;
-    width: 150px; /* Set width to match other boxes */
-    height: 30px; /* Adjusted height to match label boxes */
+    font-size: 14px; /* Standardized font size */
+    width: 150px; /* Same width as other boxes */
+    height: 35px; /* Same height as other boxes */
     justify-content: center;
-    text-align: center; /* Center text in reset button */
-    margin-top: 10px; /* Add margin for spacing */
-    padding: 6px; /* Adjusted padding to match other boxes */
+    text-align: left;
+    margin-top: 10px; /* Added margin-top for spacing */
   }
 
   .reset-btn i {
     margin-right: 10px;
+  }
+
+  .spacer {
+    width: 20px;
+  }
+
+  .row:last-child {
+    margin-top: 15px;
   }
 </style>
 
@@ -120,7 +119,7 @@
     <div class="result-box" id="avgExitPrice">0.000</div>
   </div>
 
-  <div class="row">
+  <div class="row"> 
     <div class="reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
       Reset
