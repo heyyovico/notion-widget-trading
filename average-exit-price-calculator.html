@@ -1,12 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
   .container {
     display: flex;
@@ -14,111 +9,122 @@
     align-items: center;
     margin-top: 20px;
     width: 100%;
-    max-width: 600px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px; /* Reduced padding */
   }
 
   .row {
     display: flex;
     width: 100%;
-    margin-bottom: 15px;
     justify-content: space-between;
-    align-items: center; /* Align items vertically in the center */
+    margin-bottom: 10px;
   }
 
   .label-box {
-    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
     color: #333;
-    width: calc(30% - 10px); /* Adjusted for spacing */
-    padding: 10px; /* Added padding for boxed effect */
-    background-color: #e0e0e0; /* Background color for labels */
-    border-radius: 6px; /* Rounded corners */
-    text-align: center; /* Center text */
+    text-align: center;
+    width: 150px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
   }
 
   .input-box {
     background-color: #fff;
-    border: 1px solid #ccc;
     border-radius: 6px;
-    padding: 5px; /* Reduced padding */
-    height: 30px; /* Reduced height by approximately 25% */
-    width: calc(30% - 10px);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    padding: 10px;
+    width: 100px;
+    border: 1px solid #dcdcdc;
     text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #b3b3b3;
   }
 
   .result-box {
-    background-color: #e7f3fe;
-    color: #31708f;
-    padding: 5px; /* Reduced padding */
+    background-color: #fff;
+    padding: 10px;
     border-radius: 6px;
-    height: 30px; /* Match input box height */
-    width: calc(100% - (30% + 20px)); /* Adjusted for label and margins */
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    width: 100%;
+    border: 1px solid #dcdcdc;
     text-align: center;
-    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #b3b3b3;
   }
 
   .clear-btn {
-    background-color: #000; /* Changed to black */
+    background-color: #000;
     color: white;
-    padding: 8px 16px; /* Adjusted padding */
+    padding: 12px 24px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
     font-size: 16px;
-    font-weight: bold;
-   }
+    margin-top: 10px;
+  }
 
-   .clear-btn:hover {
-     background-color: #333; /* Darker on hover */
-   }
+  .clear-btn:hover {
+    background-color: #333;
+  }
 
-   .clear-btn i {
-     margin-right: 5px; /* Space between icon and text */
-   }
+  .clear-btn i {
+    margin-right: 10px;
+  }
+
+  .spacer {
+    width: 20px;
+  }
 </style>
 
 <div class="container">
-  
-   <div class="row">
-      <button class="clear-btn" onclick="clearInputs()">
-          <i class="fas fa-redo-alt"></i>
-          Reset
-      </button>
-      <div class="label-box">Allocation (%)</div>
-      <input class="input-box" type="text" id="allocation1" placeholder="50%">
-      <input class="input-box" type="text" id="allocation2" placeholder="25%">
-      <input class="input-box" type="text" id="allocation3" placeholder="25%">
-   </div>
+  <div class="row">
+    <div class="label-box">Allocation</div>
+    <input class="input-box" type="text" id="allocation1" placeholder="%">
+    <input class="input-box" type="text" id="allocation2" placeholder="%">
+    <input class="input-box" type="text" id="allocation3" placeholder="%">
+    <input class="input-box" type="text" id="allocation4" placeholder="%">
+  </div>
 
-   <div class="row">
-      <div class="label-box">Exit Price</div>
-      <input class="input-box" type="text" id="exitPrice1" placeholder="0.0001">
-      <input class="input-box" type="text" id="exitPrice2" placeholder="0.0002">
-      <input class="input-box" type="text" id="exitPrice3" placeholder="0.0003">
-   </div>
+  <div class="row">
+    <div class="label-box">Exit Price</div>
+    <input class="input-box" type="text" id="exitPrice1" placeholder="0.0000">
+    <input class="input-box" type="text" id="exitPrice2" placeholder="0.0000">
+    <input class="input-box" type="text" id="exitPrice3" placeholder="0.0000">
+    <input class="input-box" type="text" id="exitPrice4" placeholder="0.0000">
+  </div>
 
-   <div class="row">
-      <div class="label-box">Average Exit Price</div>
-      <div class="result-box" id="avgExitPrice">--</div>
-   </div>
+  <div class="row">
+    <div class="label-box">Average Exit Price</div>
+    <div class="result-box" id="avgExitPrice">0.0000</div>
+  </div>
 
+  <button class="clear-btn" onclick="clearInputs()">
+    <i class="fas fa-sync-alt"></i>
+    Reset
+  </button>
 </div>
 
 <script>
-function clearInputs() {
-   document.getElementById('allocation1').value = '';
-   document.getElementById('allocation2').value = '';
-   document.getElementById('allocation3').value = '';
-   document.getElementById('exitPrice1').value = '';
-   document.getElementById('exitPrice2').value = '';
-   document.getElementById('exitPrice3').value = '';
-   document.getElementById('avgExitPrice').innerText = '--';
-}
+  function clearInputs() {
+    document.getElementById('allocation1').value = '';
+    document.getElementById('allocation2').value = '';
+    document.getElementById('allocation3').value = '';
+    document.getElementById('allocation4').value = '';
+    document.getElementById('exitPrice1').value = '';
+    document.getElementById('exitPrice2').value = '';
+    document.getElementById('exitPrice3').value = '';
+    document.getElementById('exitPrice4').value = '';
+    document.getElementById('avgExitPrice').innerText = '0.0000';
+  }
 
-// You can add the calculation logic for the Average Exit Price based on allocation here
+  // Add logic for Average Exit Price calculation here
 </script>
