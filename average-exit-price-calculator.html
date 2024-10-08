@@ -14,7 +14,7 @@
   .row {
     display: flex;
     width: 100%;
-    justify-content: flex-start; /* Adjusted to avoid unnecessary space between columns */
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px;
   }
@@ -53,7 +53,7 @@
     font-weight: 400;
     font-size: 14px;
     color: #000;
-    margin-right: 10px; /* Used same spacing as before */
+    margin-right: 10px; /* Consistent spacing */
   }
 
   .input-box:focus {
@@ -64,8 +64,8 @@
     background-color: #fff;
     padding: 6px;
     border-radius: 6px;
-    width: 150px; /* Adjusted width */
-    height: 35px; /* Standardized height */
+    width: 150px; /* Match width with input boxes */
+    height: 35px; /* Match height with input boxes */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
@@ -87,7 +87,7 @@
     font-weight: 600;
     font-size: 14px;
     width: 150px; /* Adjusted width */
-    height: 35px; /* Same height as the labels */
+    height: 35px; /* Adjusted height to match label box height */
     justify-content: center;
     text-align: left;
   }
@@ -125,7 +125,7 @@
     <div class="result-box" id="avgExitPrice">0.000</div>
   </div>
 
-  <div class="row" style="margin-top: 10px;"> <!-- Added margin-top for spacing -->
+  <div class="row" style="margin-top: 10px;">
     <div class="label-box-container reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
       Reset
