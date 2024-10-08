@@ -23,9 +23,15 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
         }
 
+        .row {
+            display: flex; /* Flex for each row */
+            align-items: center; /* Align items vertically */
+            margin: 5px 0; /* Vertical spacing */
+        }
+
         .label-box, .input-box, .result-box, .reset-box {
             height: 40px; /* Height of all boxes */
-            margin: 5px 0; /* Vertical spacing */
+            margin: 0 5px; /* Horizontal spacing between boxes */
             display: flex;
             align-items: center;
             padding: 0 10px; /* Horizontal padding */
@@ -36,6 +42,7 @@
         .label-box {
             font-weight: bold; /* Bold labels */
             background-color: #f9f9f9; /* Light background for labels */
+            width: 200px; /* Fixed width for labels */
         }
 
         .input-box {
@@ -57,6 +64,7 @@
             background-color: #f9f9f9; /* Light background for results */
             font-weight: bold; /* Bold result text */
             font-size: 16px; /* Larger font size for results */
+            margin-left: 5px; /* Left margin for alignment */
         }
 
         .reset-box {
@@ -66,6 +74,8 @@
             cursor: pointer; /* Pointer cursor on hover */
             text-align: center; /* Center align text */
             margin-top: 10px; /* Spacing above the reset button */
+            height: 40px; /* Match height of labels */
+            width: 100%; /* Match width of labels */
         }
 
         .horizontal-spacing {
@@ -75,7 +85,7 @@
         /* Specific alignment for the result box */
         .result-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* Align results to the start */
             align-items: center;
             margin: 10px 0; /* Space above and below */
         }
@@ -90,20 +100,26 @@
 <body>
 
 <div class="container">
-    <div class="label-box">Allocation</div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0%"></div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0%"></div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0%"></div>
+    <div class="row">
+        <div class="label-box">Allocation</div>
+        <div class="input-box" contenteditable="true" placeholder="0%"></div>
+        <div class="input-box" contenteditable="true" placeholder="0%"></div>
+        <div class="input-box" contenteditable="true" placeholder="0%"></div>
+    </div>
     
-    <div class="label-box">Exit Price</div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0"></div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0"></div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0"></div>
+    <div class="row">
+        <div class="label-box">Exit Price</div>
+        <div class="input-box" contenteditable="true" placeholder="0"></div>
+        <div class="input-box" contenteditable="true" placeholder="0"></div>
+        <div class="input-box" contenteditable="true" placeholder="0"></div>
+    </div>
 
-    <div class="label-box">Average Exit Price</div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0"></div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0"></div>
-    <div class="input-box horizontal-spacing" contenteditable="true" placeholder="0"></div>
+    <div class="row">
+        <div class="label-box">Average Exit Price</div>
+        <div class="input-box" contenteditable="true" placeholder="0"></div>
+        <div class="input-box" contenteditable="true" placeholder="0"></div>
+        <div class="input-box" contenteditable="true" placeholder="0"></div>
+    </div>
     
     <div class="result-container">
         <div class="label-box">Result</div>
