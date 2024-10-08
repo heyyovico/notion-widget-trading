@@ -14,7 +14,7 @@
   .row {
     display: flex;
     width: 100%;
-    justify-content: flex-start; /* Changed to flex-start for better alignment */
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px; /* Consistent row spacing */
   }
@@ -27,6 +27,7 @@
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
+    margin-right: 10px; /* Added margin for spacing */
   }
 
   .label-box-container i {
@@ -78,7 +79,7 @@
   .reset-btn {
     background-color: #000;
     color: white;
-    padding: 8px;
+    padding: 0; /* Set padding to 0 to ensure height is consistent */
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     display: flex;
@@ -86,8 +87,8 @@
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 14px;
-    width: 200px; /* Extended width to match labels */
-    height: 35px; /* Same height as the labels */
+    width: 150px; /* Set width to match placeholder boxes */
+    height: 35px; /* Same height as the labels and input boxes */
     justify-content: center;
     text-align: left;
   }
@@ -100,7 +101,7 @@
     width: 20px;
   }
 
-  .row > .input-box, .result-box {
+  .row > .input-box, .result-box, .reset-btn {
     margin-right: 10px; /* Adjusted for consistent spacing */
   }
 
@@ -130,7 +131,7 @@
   </div>
 
   <div class="row" style="margin-top: 10px;">
-    <div class="label-box-container reset-btn" onclick="clearInputs()">
+    <div class="reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
       Reset
     </div>
