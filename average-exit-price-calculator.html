@@ -8,8 +8,8 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    width: 900px;
-    height: 720px;
+    width: 700px; /* Reduced container width */
+    height: 600px;
   }
 
   .row {
@@ -27,7 +27,7 @@
     text-align: center;
     width: 150px;
     background-color: #fff;
-    padding: 10px;
+    padding: 6px; /* Reduced padding for smaller height */
     border-radius: 6px;
     border: 1px solid #dcdcdc;
   }
@@ -35,7 +35,7 @@
   .input-box {
     background-color: #fff;
     border-radius: 6px;
-    padding: 10px;
+    padding: 6px; /* Reduced padding for smaller height */
     width: 150px;
     border: 1px solid #dcdcdc;
     text-align: center;
@@ -43,6 +43,11 @@
     font-weight: 400;
     font-size: 14px;
     color: #b3b3b3; /* Placeholder color */
+    margin-right: 8px; /* Significantly reduced horizontal spacing */
+  }
+
+  .input-box:last-child {
+    margin-right: 0; /* Remove margin for the last box */
   }
 
   .input-box:focus {
@@ -53,19 +58,20 @@
     background-color: #fff;
     padding: 10px;
     border-radius: 6px;
-    width: 150px;
+    width: calc(100% - 20px); /* Expanded to cover width of the 3 input boxes */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600; /* Bold result font */
     font-size: 16px; /* Slightly larger font for result */
     color: #000; /* Black font for result */
+    margin-bottom: 20px;
   }
 
   .clear-btn {
     background-color: #000;
     color: white;
-    padding: 12px 24px;
+    padding: 10px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
@@ -74,9 +80,9 @@
     justify-content: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     width: 150px;
-    height: 46px;
+    height: 35px; /* Reduced button height */
   }
 
   .clear-btn:hover {
