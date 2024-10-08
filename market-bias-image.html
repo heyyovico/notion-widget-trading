@@ -1,46 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Image Display</title>
-    <style>
-        /* Remove default margins and padding */
-        body {
-            margin: 0;
-            padding: 0;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        /* Style for the image display */
-        #imageContainer {
-            width: 100vw; /* Full viewport width */
-            height: 100vh; /* Full viewport height */
-            object-fit: contain; /* Scale the image to fit */
-            cursor: pointer; /* Change cursor to pointer on hover */
-            display: block; /* Ensures the image is treated as a block element */
-        }
-    </style>
-    <script>
-        // Array to hold the image URLs with raw GitHub links
-        const images = [
-            'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Market%20Bias_Side%20-%20Up.svg',
-            'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Market%20Bias_Side%20-%20Down.svg',
-            'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/No%20Bias.svg' // Added No Bias image
-        ];
-        
-        let currentIndex = 0; // Start with the first image
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-        // Function to change the image when clicked
-        function showNextImage() {
-            currentIndex = (currentIndex + 1) % images.length; // Loop back to the first image
-            document.getElementById("imageContainer").src = images[currentIndex];
-        }
-    </script>
-</head>
-<body>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 900px;
+    height: 720px;
+  }
 
-    <!-- Image container to display the selected image -->
-    <img id="imageContainer" src="https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Market%20Bias_Side%20-%20Up.svg" alt="Side / Up" onclick="showNextImage()">
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
 
-</body>
-</html>
+  .label-box {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    width: 150px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+  }
+
+  .input-box {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100px;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #b3b3b3;
+  }
+
+  .result-box {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #b3b3b3;
+  }
+
+  .clear-btn {
+    background-color: #000;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    width: 150px;
+    height: 46px;
+  }
+
+  .clear-btn:hover {
+    background-color: #333;
+  }
+
+  .clear-btn i {
+    margin-right: 10px;
+  }
+
+  .spacer {
+    width: 20px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="label-box">Allocation</div>
+    <input class="input-box" type="text" id="allocation1" placeholder="%">
+    <input class="input-box" type="text" id="allocation2" placeholder="%">
+    <input class="input-box" type="text" id="allocation3" placeholder="%">
+  </div>
+
+  <div class="row">
+    <div class="label-box">Exit Price</div>
+    <input class="input-box" type="text" id="exitPrice1" placeholder="0.0000">
+    <input class="input-box" type="text" id="exitPrice2" placeholder="0.0000">
+    <input class="input-box" type="text" id="exitPrice3" placeholder="0.0000">
+  </div>
+
+  <div class="row">
+    <div class="label-box">Average Exit Price</div>
+    <div class="result-box" id="avgExitPrice">0.0000</div>
+  </div>
+
+  <div class="row">
+    <div class="label-box">Reset</div>
+    <button class="clear-btn" onclick="clearInputs()">
+      <i class="fas fa-sync-alt"></i>
+      Reset
+    </button>
+  </div>
+</div>
+
+<script>
+  function clearInputs() {
+    document.getElementById('allocation1').value = '';
+    document.getElementById('allocation2').value = '';
+    document.getElementById('allocation3').value = '';
+    document.getElementById('exitPrice1').value = '';
+    document.getElementById('exitPrice2').value = '';
+    document.getElementById('exitPrice3').value = '';
+    document.getElementById('avgExitPrice').innerText = '0.0000';
+  }
+
+  function calculateAverageExitPrice() {
+    const allocations = [
+      parseFloat(document.getElementById('allocation1').value) || 0,
+      parseFloat(document.getElementById('allocation2').value) || 0,
+      parseFloat(document.getElementById('allocation3').value) || 0
+    ];
+
+    const exitPrices = [
+      parseFloat(document.getElementById('exitPrice1').value) || 0,
+      parseFloat(document.getElementById('exitPrice2').value) || 0,
+      parseFloat(document.getElementById('exitPrice3').value) || 0
+    ];
+
+    let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
+
+    if (totalAllocation === 0) {
+      document.getElementById('avgExitPrice').innerText = '0.0000';
+      return;
+    }
+
+    let weightedSum = 0;
+    for (let i = 0; i < allocations.length; i++) {
+      weightedSum += allocations[i] * exitPrices[i];
+    }
+
+    let avgExitPrice = weightedSum / totalAllocation;
+    document.getElementById('avgExitPrice').innerText = avgExitPrice.toFixed(5);
+  }
+
+  // Attach change event listeners to recalculate average exit price
+  document.querySelectorAll('.input-box').forEach(input => {
+    input.addEventListener('input', calculateAverageExitPrice);
+  });
+</script>
