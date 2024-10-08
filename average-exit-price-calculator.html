@@ -8,7 +8,8 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    width: 100%;
+    width: 900px;
+    height: 720px;
   }
 
   .row {
@@ -66,10 +67,12 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 16px;
-    margin-top: 10px;
+    width: 150px;
+    height: 46px;
   }
 
   .clear-btn:hover {
@@ -91,7 +94,6 @@
     <input class="input-box" type="text" id="allocation1" placeholder="%">
     <input class="input-box" type="text" id="allocation2" placeholder="%">
     <input class="input-box" type="text" id="allocation3" placeholder="%">
-    <input class="input-box" type="text" id="allocation4" placeholder="%">
   </div>
 
   <div class="row">
@@ -99,7 +101,6 @@
     <input class="input-box" type="text" id="exitPrice1" placeholder="0.0000">
     <input class="input-box" type="text" id="exitPrice2" placeholder="0.0000">
     <input class="input-box" type="text" id="exitPrice3" placeholder="0.0000">
-    <input class="input-box" type="text" id="exitPrice4" placeholder="0.0000">
   </div>
 
   <div class="row">
@@ -107,10 +108,13 @@
     <div class="result-box" id="avgExitPrice">0.0000</div>
   </div>
 
-  <button class="clear-btn" onclick="clearInputs()">
-    <i class="fas fa-sync-alt"></i>
-    Reset
-  </button>
+  <div class="row">
+    <div class="label-box">Reset</div>
+    <button class="clear-btn" onclick="clearInputs()">
+      <i class="fas fa-sync-alt"></i>
+      Reset
+    </button>
+  </div>
 </div>
 
 <script>
@@ -118,13 +122,43 @@
     document.getElementById('allocation1').value = '';
     document.getElementById('allocation2').value = '';
     document.getElementById('allocation3').value = '';
-    document.getElementById('allocation4').value = '';
     document.getElementById('exitPrice1').value = '';
     document.getElementById('exitPrice2').value = '';
     document.getElementById('exitPrice3').value = '';
-    document.getElementById('exitPrice4').value = '';
     document.getElementById('avgExitPrice').innerText = '0.0000';
   }
 
-  // Add logic for Average Exit Price calculation here
+  function calculateAverageExitPrice() {
+    const allocations = [
+      parseFloat(document.getElementById('allocation1').value) || 0,
+      parseFloat(document.getElementById('allocation2').value) || 0,
+      parseFloat(document.getElementById('allocation3').value) || 0
+    ];
+
+    const exitPrices = [
+      parseFloat(document.getElementById('exitPrice1').value) || 0,
+      parseFloat(document.getElementById('exitPrice2').value) || 0,
+      parseFloat(document.getElementById('exitPrice3').value) || 0
+    ];
+
+    let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
+
+    if (totalAllocation === 0) {
+      document.getElementById('avgExitPrice').innerText = '0.0000';
+      return;
+    }
+
+    let weightedSum = 0;
+    for (let i = 0; i < allocations.length; i++) {
+      weightedSum += allocations[i] * exitPrices[i];
+    }
+
+    let avgExitPrice = weightedSum / totalAllocation;
+    document.getElementById('avgExitPrice').innerText = avgExitPrice.toFixed(5);
+  }
+
+  // Attach change event listeners to recalculate average exit price
+  document.querySelectorAll('.input-box').forEach(input => {
+    input.addEventListener('input', calculateAverageExitPrice);
+  });
 </script>
