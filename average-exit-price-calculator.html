@@ -14,7 +14,7 @@
   .row {
     display: flex;
     width: 100%;
-    justify-content: flex-start; /* Change to flex-start for consistent alignment */
+    justify-content: flex-start; /* Ensure consistent alignment */
     align-items: center;
     margin-bottom: 10px;
   }
@@ -27,7 +27,7 @@
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Added margin to create space between Column 1 and Column 2 */
+    margin-right: 10px; /* Space between Column 1 and Column 2 */
   }
 
   .label-box-container i {
@@ -47,12 +47,12 @@
     border-radius: 6px;
     padding: 6px;
     width: 150px; /* Width for placeholder boxes */
-    height: 30px; /* Height for placeholder boxes */
+    height: 35px; /* Match height with label boxes */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 14px; /* Font size to match label */
     color: #000;
     margin-right: 10px; /* Consistent horizontal spacing */
   }
@@ -66,12 +66,12 @@
     padding: 6px;
     border-radius: 6px;
     width: 150px; /* Match width with input boxes */
-    height: 30px; /* Match height with input boxes */
+    height: 35px; /* Match height with input boxes */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 400; /* Match font weight with input boxes */
+    font-size: 14px; /* Match font size with input boxes */
     color: #000;
     margin-right: 10px; /* Ensure consistent spacing */
   }
@@ -79,7 +79,7 @@
   .reset-btn {
     background-color: #000;
     color: white;
-    padding: 8px;
+    padding: 0; /* Remove padding to match height */
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     display: flex;
@@ -88,7 +88,7 @@
     font-weight: 600;
     font-size: 14px;
     width: 150px; /* Set width to match label boxes */
-    height: 30px; /* Set height to match label boxes */
+    height: 35px; /* Set height to match label boxes */
     justify-content: center;
     text-align: center; /* Center text in reset button */
     margin-top: 10px; /* Add margin for spacing */
