@@ -1,143 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Trading Calculator</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f9f9f9;
-            padding: 20px;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start */
-            width: 900px; /* Adjust the overall width */
-            margin: auto;
-        }
-        .box {
-            background-color: #fff;
-            color: #000;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-bottom: 10px; /* 10 pixels between rows */
-            height: 30px; /* Consistent height */
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-        .placeholder {
-            width: 150px; /* Width for placeholder boxes */
-            height: 30px; /* Height for placeholder boxes */
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 5px;
-            margin-left: 10px; /* 10 pixels between columns */
-            font-size: 14px;
-            text-align: left;
-            color: grey;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for better aesthetics */
-        }
-        .result {
-            width: 320px; /* Width for results box */
-            height: 30px; /* Height for results box */
-            font-weight: bold;
-            font-size: 16px; /* Slightly larger font for results */
-            color: black;
-            background-color: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            margin-left: 10px; /* Aligns with placeholders */
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for better aesthetics */
-        }
-        .reset-button {
-            background-color: black;
-            color: white;
-            width: 320px; /* Width for reset button */
-            height: 30px; /* Height for reset button */
-            border: none;
-            border-radius: 6px;
-            margin-left: 10px; /* Aligns with labels */
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added shadow for better aesthetics */
-        }
-        .label {
-            font-weight: bold;
-            width: 320px; /* Width for label boxes */
-            height: 30px; /* Height for label boxes */
-        }
-        input:focus {
-            outline: none;
-            color: black; /* Text turns black on focus */
-        }
-    </style>
-</head>
-<body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+    width: 700px;
+  }
+
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .label-box-container {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 8px;
+    width: 150px;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    align-items: center;
+  }
+
+  .label-box-container i {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
+  .label-box-container span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .input-box {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 6px;
+    width: 150px;
+    height: 35px; /* Standardized height */
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+    margin-right: 5px;
+  }
+
+  .input-box:focus {
+    color: #000;
+  }
+
+  .result-box {
+    background-color: #fff;
+    padding: 6px;
+    border-radius: 6px;
+    width: 150px; /* Adjusted width */
+    height: 35px; /* Standardized height */
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+  }
+
+  .reset-btn {
+    background-color: #000;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    width: 150px;
+    height: 35px; /* Same height as the labels */
+    justify-content: center;
+    text-align: left;
+  }
+
+  .reset-btn i {
+    margin-right: 10px;
+  }
+
+  .spacer {
+    width: 20px;
+  }
+
+  /* Consistent horizontal spacing with vertical */
+  .row > .input-box, .result-box {
+    margin-right: 10px;
+  }
+
+  .row:last-child {
+    margin-top: 15px;
+  }
+</style>
 
 <div class="container">
-    <div class="box label">Allocation</div>
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
+  <div class="row">
+    <div class="label-box-container"><i class="fas fa-percentage"></i> <span>Allocation</span></div>
+    <input class="input-box" type="text" id="allocation1" placeholder="%">
+    <input class="input-box" type="text" id="allocation2" placeholder="%">
+    <input class="input-box" type="text" id="allocation3" placeholder="%">
+  </div>
 
-    <div class="box label">Exit Price</div>
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
+  <div class="row">
+    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Exit Price</span></div>
+    <input class="input-box" type="text" id="exitPrice1" placeholder="0.000">
+    <input class="input-box" type="text" id="exitPrice2" placeholder="0.000">
+    <input class="input-box" type="text" id="exitPrice3" placeholder="0.000">
+  </div>
 
-    <div class="box label">Average Exit Price</div>
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
-    <input type="text" class="placeholder" placeholder="0" oninput="updateResults()">
+  <div class="row">
+    <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
+    <div class="result-box" id="avgExitPrice">0.000</div>
+  </div>
 
-    <button class="reset-button" onclick="resetFields()">
-        <i class="fa-solid fa-undo"></i> Reset
-    </button>
-
-    <div class="box label">Results</div>
-    <div class="result" id="resultBox">0.000</div>
+  <div class="row" style="margin-top: 10px;"> <!-- Added margin-top for spacing -->
+    <div class="label-box-container reset-btn" onclick="clearInputs()">
+      <i class="fas fa-sync-alt"></i>
+      Reset
+    </div>
+  </div>
 </div>
 
 <script>
-    function updateResults() {
-        const allocationInputs = document.querySelectorAll('.placeholder:nth-child(2n)');
-        const exitPriceInputs = document.querySelectorAll('.placeholder:nth-child(3n)');
-        const averageExitPriceInputs = document.querySelectorAll('.placeholder:nth-child(4n)');
-        
-        let total = 0;
+  function clearInputs() {
+    document.getElementById('allocation1').value = '';
+    document.getElementById('allocation2').value = '';
+    document.getElementById('allocation3').value = '';
+    document.getElementById('exitPrice1').value = '';
+    document.getElementById('exitPrice2').value = '';
+    document.getElementById('exitPrice3').value = '';
+    document.getElementById('avgExitPrice').innerText = '0.000';
+  }
 
-        allocationInputs.forEach((input, index) => {
-            const allocationValue = parseFloat(input.value) || 0;
-            const exitPriceValue = parseFloat(exitPriceInputs[index].value) || 0;
-            const averageExitPriceValue = parseFloat(averageExitPriceInputs[index].value) || 0;
+  function formatToPercentage(value) {
+    if (value < 1 && value !== 0) {
+      return (value * 100).toFixed(1) + '%';
+    } else {
+      return parseFloat(value).toFixed(1) + '%';
+    }
+  }
 
-            // Only calculate if allocation value is not zero
-            if (allocationValue > 0) {
-                total += allocationValue * exitPriceValue * averageExitPriceValue;
-            }
-        });
+  function calculateAverageExitPrice() {
+    const allocations = [
+      parseFloat(document.getElementById('allocation1').value) || 0,
+      parseFloat(document.getElementById('allocation2').value) || 0,
+      parseFloat(document.getElementById('allocation3').value) || 0
+    ];
 
-        // Limit the result to 3 decimal places
-        document.getElementById('resultBox').innerText = total.toFixed(3);
+    const exitPrices = [
+      parseFloat(document.getElementById('exitPrice1').value) || 0,
+      parseFloat(document.getElementById('exitPrice2').value) || 0,
+      parseFloat(document.getElementById('exitPrice3').value) || 0
+    ];
+
+    let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
+
+    if (totalAllocation === 0) {
+      document.getElementById('avgExitPrice').innerText = '0.000';
+      return;
     }
 
-    function resetFields() {
-        const inputs = document.querySelectorAll('.placeholder');
-        inputs.forEach(input => {
-            input.value = '';
-            input.style.color = 'grey'; // Reset placeholder color
-        });
-        document.getElementById('resultBox').innerText = '0.000';
+    let weightedSum = 0;
+    for (let i = 0; i < allocations.length; i++) {
+      weightedSum += allocations[i] * exitPrices[i];
     }
+
+    let avgExitPrice = weightedSum / totalAllocation;
+    document.getElementById('avgExitPrice').innerText = avgExitPrice.toFixed(3);
+  }
+
+  // Format percentage fields and recalculate on input
+  document.querySelectorAll('.input-box').forEach((input, idx) => {
+    input.addEventListener('input', function () {
+      if (idx < 3) { // Only apply percentage formatting to the first 3 inputs
+        input.value = formatToPercentage(parseFloat(input.value) || 0);
+      }
+      calculateAverageExitPrice();
+    });
+  });
 </script>
-
-</body>
-</html>
