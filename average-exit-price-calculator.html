@@ -14,7 +14,7 @@
   .row {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: flex-start; /* Change to flex-start for consistent alignment */
     align-items: center;
     margin-bottom: 10px;
   }
@@ -23,10 +23,11 @@
     background-color: #fff;
     border-radius: 6px;
     padding: 8px;
-    width: 150px;
+    width: 150px; /* Adjusted to match other boxes */
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
+    margin-right: 10px; /* Added margin to create space between Column 1 and Column 2 */
   }
 
   .label-box-container i {
@@ -45,15 +46,15 @@
     background-color: #fff;
     border-radius: 6px;
     padding: 6px;
-    width: 150px;
-    height: 35px; /* Standardized height */
+    width: 150px; /* Width for placeholder boxes */
+    height: 30px; /* Height for placeholder boxes */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 14px;
     color: #000;
-    margin-right: 10px; /* Consistent spacing */
+    margin-right: 10px; /* Consistent horizontal spacing */
   }
 
   .input-box:focus {
@@ -65,14 +66,14 @@
     padding: 6px;
     border-radius: 6px;
     width: 150px; /* Match width with input boxes */
-    height: 35px; /* Match height with input boxes */
+    height: 30px; /* Match height with input boxes */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 16px;
     color: #000;
-    margin-right: 10px; /* Consistent spacing */
+    margin-right: 10px; /* Ensure consistent spacing */
   }
 
   .reset-btn {
@@ -86,23 +87,15 @@
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 14px;
-    width: 150px; /* Adjusted width */
-    height: 35px; /* Adjusted height to match label box height */
+    width: 150px; /* Set width to match label boxes */
+    height: 30px; /* Set height to match label boxes */
     justify-content: center;
-    text-align: left;
-    margin-top: 10px; /* Space above the reset button */
+    text-align: center; /* Center text in reset button */
+    margin-top: 10px; /* Add margin for spacing */
   }
 
   .reset-btn i {
     margin-right: 10px;
-  }
-
-  .spacer {
-    width: 20px;
-  }
-
-  .row:last-child {
-    margin-top: 15px;
   }
 </style>
 
@@ -126,7 +119,7 @@
     <div class="result-box" id="avgExitPrice">0.000</div>
   </div>
 
-  <div class="row">
+  <div class="row"> <!-- Adjusted spacing for better layout -->
     <div class="reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
       Reset
