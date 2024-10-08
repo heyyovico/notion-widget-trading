@@ -16,7 +16,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .label-box {
@@ -36,26 +36,30 @@
     background-color: #fff;
     border-radius: 6px;
     padding: 10px;
-    width: 100px;
+    width: 150px;
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 14px;
-    color: #b3b3b3;
+    color: #b3b3b3; /* Placeholder color */
+  }
+
+  .input-box:focus {
+    color: #000; /* Change font color to black when typing */
   }
 
   .result-box {
     background-color: #fff;
     padding: 10px;
     border-radius: 6px;
-    width: 100%;
+    width: 150px;
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    color: #b3b3b3;
+    font-weight: 600; /* Bold result font */
+    font-size: 16px; /* Slightly larger font for result */
+    color: #000; /* Black font for result */
   }
 
   .clear-btn {
@@ -109,7 +113,6 @@
   </div>
 
   <div class="row">
-    <div class="label-box">Reset</div>
     <button class="clear-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
       Reset
