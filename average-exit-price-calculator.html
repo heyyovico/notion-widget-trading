@@ -3,11 +3,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-  /* Set box-sizing to include padding and borders in total width and height */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-
   .container {
     display: flex;
     flex-direction: column;
@@ -19,24 +14,19 @@
   .row {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start; /* Changed to flex-start for better alignment */
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Consistent row spacing */
   }
 
   .label-box-container {
     background-color: #fff;
     border-radius: 6px;
-    padding: 6px; /* Standardized padding */
-    width: 150px; /* Standardized width */
-    height: 35px; /* Standardized height */
+    padding: 8px;
+    width: 200px; /* Extended width */
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px; /* Standardized font size */
-    color: #333;
   }
 
   .label-box-container i {
@@ -44,19 +34,26 @@
     font-size: 14px;
   }
 
-  .input-box, .result-box {
+  .label-box-container span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .input-box {
     background-color: #fff;
     border-radius: 6px;
-    padding: 6px; /* Standardized padding */
-    width: 150px; /* Standardized width */
+    padding: 6px;
+    width: 150px;
     height: 35px; /* Standardized height */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 14px; /* Standardized font size */
+    font-size: 14px;
     color: #000;
-    margin-right: 10px; /* Consistent horizontal spacing */
+    margin-right: 10px; /* Use consistent spacing */
   }
 
   .input-box:focus {
@@ -64,26 +61,35 @@
   }
 
   .result-box {
-    font-weight: 600; /* Bold font for results */
-    font-size: 16px; /* Standardized font size for results */
+    background-color: #fff;
+    padding: 6px;
+    border-radius: 6px;
+    width: 150px; /* Adjusted width to match input boxes */
+    height: 35px; /* Standardized height */
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px; /* Adjusted font size */
+    color: #000;
+    margin-right: 10px; /* Added margin for spacing */
   }
 
   .reset-btn {
     background-color: #000;
     color: white;
-    padding: 6px; /* Standardized padding */
+    padding: 8px;
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 14px; /* Standardized font size */
-    width: 150px; /* Same width as other boxes */
-    height: 35px; /* Same height as other boxes */
+    font-size: 14px;
+    width: 200px; /* Extended width to match labels */
+    height: 35px; /* Same height as the labels */
     justify-content: center;
     text-align: left;
-    margin-top: 10px; /* Added margin-top for spacing */
   }
 
   .reset-btn i {
@@ -92,6 +98,10 @@
 
   .spacer {
     width: 20px;
+  }
+
+  .row > .input-box, .result-box {
+    margin-right: 10px; /* Adjusted for consistent spacing */
   }
 
   .row:last-child {
@@ -119,8 +129,8 @@
     <div class="result-box" id="avgExitPrice">0.000</div>
   </div>
 
-  <div class="row"> 
-    <div class="reset-btn" onclick="clearInputs()">
+  <div class="row" style="margin-top: 10px;">
+    <div class="label-box-container reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
       Reset
     </div>
@@ -175,10 +185,9 @@
     document.getElementById('avgExitPrice').innerText = avgExitPrice.toFixed(3);
   }
 
-  // Format percentage fields and recalculate on input
   document.querySelectorAll('.input-box').forEach((input, idx) => {
     input.addEventListener('input', function () {
-      if (idx < 3) { // Only apply percentage formatting to the first 3 inputs
+      if (idx < 3) {
         input.value = formatToPercentage(parseFloat(input.value) || 0);
       }
       calculateAverageExitPrice();
