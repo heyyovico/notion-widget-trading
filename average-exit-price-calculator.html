@@ -4,130 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Calculator Widget</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f4f4f4; /* Light background for contrast */
-        }
-
         .container {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             text-align: left;
-            width: 900px; /* Width of the overall widget */
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #fff; /* White background for the widget */
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            width: 100%; /* Allow the container to use the full width */
+            max-width: 900px; /* Limit max width */
+            margin: auto; /* Center the container */
+            padding: 20px; /* Padding around the container */
         }
 
-        .row {
-            display: flex; /* Flex for each row */
-            align-items: center; /* Align items vertically */
-            margin: 5px 0; /* Vertical spacing */
-        }
-
-        .label-box, .input-box, .result-box, .reset-box {
-            height: 40px; /* Height of all boxes */
-            margin: 0 5px; /* Horizontal spacing between boxes */
+        .box {
             display: flex;
             align-items: center;
-            padding: 0 10px; /* Horizontal padding */
-            border: 1px solid #e0e0e0; /* Light border */
-            border-radius: 4px; /* Rounded corners */
+            justify-content: flex-start; /* Align text to the start */
+            margin-bottom: 10px; /* Space between rows */
+            height: 30px; /* Set height for all boxes */
         }
 
         .label-box {
-            font-weight: bold; /* Bold labels */
-            background-color: #f9f9f9; /* Light background for labels */
-            width: 200px; /* Fixed width for labels */
+            background-color: #f0f0f0;
+            color: #000;
+            width: 320px; /* Label width */
+            height: 30px; /* Height */
+            padding: 5px;
+            font-weight: bold; /* Bold font for labels */
+            border: 1px solid #ccc; /* Light border */
         }
 
-        .input-box {
-            color: #aaa; /* Placeholder color */
-            width: 100%; /* Full width */
+        .placeholder {
+            width: 150px; /* Width for placeholder boxes */
+            height: 30px; /* Height for placeholder boxes */
+            border: 1px solid #ccc; /* Light border */
+            padding: 5px;
+            font-size: 14px; /* Font size */
+            color: grey; /* Placeholder color */
+            transition: color 0.2s ease; /* Smooth color transition */
         }
 
-        .input-box:focus {
-            color: black; /* Change text color on focus */
-            outline: none; /* Remove outline */
+        .placeholder:focus {
+            color: black; /* Change color to black on focus */
         }
 
-        .input-box::placeholder {
-            color: #aaa; /* Placeholder color */
-        }
-
-        .result-box {
-            width: 320px; /* Fixed width for results box */
-            background-color: #f9f9f9; /* Light background for results */
-            font-weight: bold; /* Bold result text */
-            font-size: 16px; /* Larger font size for results */
-            margin-left: 5px; /* Left margin for alignment */
-        }
-
-        .reset-box {
-            background-color: black; /* Black background for reset */
-            color: white; /* White text for reset */
-            justify-content: center; /* Center the text */
-            cursor: pointer; /* Pointer cursor on hover */
-            text-align: center; /* Center align text */
-            margin-top: 10px; /* Spacing above the reset button */
-            height: 40px; /* Match height of labels */
-            width: 100%; /* Match width of labels */
-        }
-
-        .horizontal-spacing {
-            margin: 0 10px; /* Horizontal spacing */
-        }
-
-        /* Specific alignment for the result box */
-        .result-container {
-            display: flex;
-            justify-content: flex-start; /* Align results to the start */
-            align-items: center;
-            margin: 10px 0; /* Space above and below */
+        .result {
+            width: 320px; /* Result box width */
+            height: 30px; /* Height for result box */
+            font-weight: bold; /* Bold font for results */
+            color: black; /* Result color */
+            border: 1px solid #ccc; /* Light border */
+            margin-top: 10px; /* Space above result box */
         }
 
         .reset-button {
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
+            width: 320px; /* Width for Reset button */
+            height: 30px; /* Height for Reset button */
+            background-color: black; /* Black background */
+            color: white; /* White text color */
+            border: none; /* No border */
+            font-weight: bold; /* Bold font for button */
+            cursor: pointer; /* Pointer cursor */
+            margin-top: 10px; /* Space above Reset button */
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="row">
-        <div class="label-box">Allocation</div>
-        <div class="input-box" contenteditable="true" placeholder="0%"></div>
-        <div class="input-box" contenteditable="true" placeholder="0%"></div>
-        <div class="input-box" contenteditable="true" placeholder="0%"></div>
+    <div class="container">
+        <div class="box">
+            <div class="label-box">Allocation</div>
+            <input type="text" class="placeholder" placeholder="0" />
+            <input type="text" class="placeholder" placeholder="0" />
+            <input type="text" class="placeholder" placeholder="0" />
+        </div>
+        <div class="box">
+            <div class="label-box">Exit Price</div>
+            <input type="text" class="placeholder" placeholder="0" />
+            <input type="text" class="placeholder" placeholder="0" />
+            <input type="text" class="placeholder" placeholder="0" />
+        </div>
+        <div class="box">
+            <div class="label-box">Average Exit Price</div>
+            <input type="text" class="placeholder" placeholder="0" />
+            <input type="text" class="placeholder" placeholder="0" />
+            <input type="text" class="placeholder" placeholder="0" />
+        </div>
+        <div class="box">
+            <button class="reset-button">Reset <i class="fas fa-undo"></i></button>
+        </div>
+        <div class="box">
+            <div class="result">Result: 0.000</div>
+        </div>
     </div>
-    
-    <div class="row">
-        <div class="label-box">Exit Price</div>
-        <div class="input-box" contenteditable="true" placeholder="0"></div>
-        <div class="input-box" contenteditable="true" placeholder="0"></div>
-        <div class="input-box" contenteditable="true" placeholder="0"></div>
-    </div>
 
-    <div class="row">
-        <div class="label-box">Average Exit Price</div>
-        <div class="input-box" contenteditable="true" placeholder="0"></div>
-        <div class="input-box" contenteditable="true" placeholder="0"></div>
-        <div class="input-box" contenteditable="true" placeholder="0"></div>
-    </div>
-    
-    <div class="result-container">
-        <div class="label-box">Result</div>
-        <div class="result-box">0.000</div>
-    </div>
+    <script>
+        const placeholders = document.querySelectorAll('.placeholder');
+        const resultBox = document.querySelector('.result');
 
-    <div class="reset-box reset-button">Reset <i class="fa-solid fa-rotate-left"></i></div>
-</div>
+        placeholders.forEach((placeholder, index) => {
+            placeholder.addEventListener('focus', function () {
+                if (this.value === "") {
+                    this.style.color = "black"; // Change font color to black on focus
+                }
+            });
 
+            placeholder.addEventListener('blur', function () {
+                if (this.value === "") {
+                    this.style.color = "grey"; // Change font color back to grey if empty
+                }
+            });
+
+            placeholder.addEventListener('input', function () {
+                calculateResult();
+            });
+        });
+
+        function calculateResult() {
+            const allocations = Array.from(placeholders).slice(0, 3).map(p => parseFloat(p.value) || 0);
+            const exitPrices = Array.from(placeholders).slice(3, 6).map(p => parseFloat(p.value) || 0);
+            const avgExitPrices = Array.from(placeholders).slice(6, 9).map(p => parseFloat(p.value) || 0);
+
+            // Assuming a simple calculation: (Allocation * Exit Price) / Average Exit Price
+            let totalResult = 0;
+            for (let i = 0; i < allocations.length; i++) {
+                if (avgExitPrices[i] !== 0) { // Avoid division by zero
+                    totalResult += (allocations[i] * exitPrices[i]) / avgExitPrices[i];
+                }
+            }
+
+            resultBox.textContent = `Result: ${totalResult.toFixed(3)}`; // Limit to 3 decimals
+        }
+
+        document.querySelector('.reset-button').addEventListener('click', function() {
+            placeholders.forEach(p => {
+                p.value = '';
+                p.style.color = 'grey'; // Reset to grey color
+            });
+            resultBox.textContent = 'Result: 0.000'; // Reset result
+        });
+    </script>
 </body>
 </html>
