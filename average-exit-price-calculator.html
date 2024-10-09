@@ -34,6 +34,11 @@
     margin-right: 10px;
   }
 
+  .black-label-box {
+    background-color: #000; /* Black background */
+    color: white; /* White text for contrast */
+  }
+
   .label-box-container i {
     margin-right: 8px;
     font-size: 14px;
@@ -62,14 +67,14 @@
   }
 
   .result-box {
-    background-color: #000; /* Black background for result */
+    background-color: #fff;
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 14px;
-    color: white; /* White text for contrast */
+    color: black;
     width: 150px;
     height: 35px;
     padding: 6px;
@@ -77,24 +82,16 @@
   }
 
   .reset-btn, .copy-btn {
-    background-color: #dcdcdc; /* Grey background */
+    background: none; /* No visible box */
     color: #808080; /* Grey icon */
-    border-radius: 6px;
-    width: 35px; /* Square box to house icon only */
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    font-size: 18px;
     cursor: pointer;
-    margin-left: 5px; /* Adjust spacing between buttons */
+    margin-left: 5px;
   }
 
   .reset-btn:hover, .copy-btn:hover {
-    background-color: #a9a9a9; /* Slightly darker grey on hover */
-  }
-
-  .spacer {
-    width: 20px;
+    color: #000; /* Darker on hover */
   }
 
   .row:last-child {
@@ -119,15 +116,15 @@
   </div>
 
   <div class="row">
-    <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
+    <div class="label-box-container black-label-box"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
     <div class="result-box" id="avgExitPrice">0.000</div>
-    <!-- Reset and Copy buttons in 3rd column, 3rd row -->
-    <div class="reset-btn" onclick="clearInputs()">
+    <!-- Reset and Copy buttons in column 3, row 3 -->
+    <button class="reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
-    </div>
-    <div class="copy-btn" onclick="copyResult()">
+    </button>
+    <button class="copy-btn" onclick="copyResult()">
       <i class="fas fa-copy"></i>
-    </div>
+    </button>
   </div>
 </div>
 
