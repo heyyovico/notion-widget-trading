@@ -13,6 +13,7 @@
     align-items: flex-start;
     margin-top: 20px;
     width: 680px; /* Snug fit */
+    position: relative; /* For positioning pop-up bubbles */
   }
 
   .row {
@@ -104,6 +105,24 @@
     display: flex;
     margin-left: -10px; /* Shift icons left for alignment */
   }
+
+  /* Bubble notification styles */
+  .bubble {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .bubble.show {
+    opacity: 1;
+  }
 </style>
 
 <div class="container">
@@ -116,9 +135,9 @@
 
   <div class="row">
     <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Exit Price</span></div>
-    <input class="input-box" type="text" id="exitPrice1" placeholder="0.000">
-    <input class="input-box" type="text" id="exitPrice2" placeholder="0.000">
-    <input class="input-box" type="text" id="exitPrice3" placeholder="0.000">
+    <input class="input-box" type="text" id="exitPrice1" placeholder="$0.00">
+    <input class="input-box" type="text" id="exitPrice2" placeholder="$0.00">
+    <input class="input-box" type="text" id="exitPrice3" placeholder="$0.00">
   </div>
 
   <div class="row">
@@ -134,6 +153,10 @@
       </button>
     </div>
   </div>
+
+  <!-- Bubbles for feedback messages -->
+  <div id="copyBubble" class="bubble">Copied!</div>
+  <div id="clearBubble" class="bubble">Cleared!</div>
 </div>
 
 <script>
@@ -145,21 +168,24 @@
     document.getElementById('exitPrice2').value = '';
     document.getElementById('exitPrice3').value = '';
     document.getElementById('avgExitPrice').innerText = '0.000';
+    showBubble('clearBubble');
   }
 
   function copyResult() {
     const result = document.getElementById('avgExitPrice').innerText;
     navigator.clipboard.writeText(result).then(() => {
-      alert('Copied: ' + result);
+      showBubble('copyBubble');
     });
   }
 
   function formatToPercentage(value) {
-    if (value < 1 && value !== 0) {
-      return (value * 100).toFixed(1) + '%';
-    } else {
-      return parseFloat(value).toFixed(1) + '%';
+    const num = parseFloat(value);
+    if (num >= 1) {
+      return num.toFixed(0) + '%'; // Show full percentage for values like 50
+    } else if (num > 0 && num < 1) {
+      return (num * 100).toFixed(0) + '%'; // Show percentage for decimal values like 0.5
     }
+    return '0%';
   }
 
   function calculateAverageExitPrice() {
@@ -192,11 +218,16 @@
   }
 
   document.querySelectorAll('.input-box').forEach((input, idx) => {
-    input.addEventListener('input', function () {
+    input.addEventListener('blur', function () {
       if (idx < 3) {
-        input.value = formatToPercentage(parseFloat(input.value) || 0);
+        input.value = formatToPercentage(input.value);
       }
       calculateAverageExitPrice();
     });
   });
-</script>
+
+  function showBubble(id) {
+    const bubble = document.getElementById(id);
+    bubble.classList.add('show');
+    setTimeout(() => {
+      bubble.class
