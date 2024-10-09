@@ -3,6 +3,10 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
+  * {
+    box-sizing: border-box; /* Ensures padding and borders are included in the total width/height */
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -23,7 +27,7 @@
     background-color: #fff;
     border-radius: 6px;
     padding: 8px;
-    width: 180px; /* Shortened width to match other labels */
+    width: 180px; /* Label width */
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
@@ -42,12 +46,9 @@
     color: #333;
   }
 
-  .input-box {
+  .input-box, .reset-btn {
     background-color: #fff;
     border-radius: 6px;
-    padding: 6px;
-    width: 150px;
-    height: 35px; /* Standardized height */
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
@@ -55,40 +56,35 @@
     font-size: 14px;
     color: #000;
     margin-right: 10px; /* Use consistent spacing */
+    width: 150px; /* Standardized width */
+    height: 35px; /* Standardized height */
+    padding: 6px; /* Standardized padding */
+  }
+
+  .result-box {
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px; /* Same font size as input boxes */
+    color: #000;
+    width: 150px; /* Match width to input boxes */
+    height: 35px; /* Match height to input boxes */
+    padding: 6px; /* Match padding to input boxes */
+    margin-right: 10px; /* Use consistent spacing */
   }
 
   .input-box:focus {
     color: #000;
   }
 
-  .result-box {
-    background-color: #fff;
-    padding: 6px;
-    border-radius: 6px;
-    width: 150px; /* Adjusted width to match input boxes */
-    height: 35px; /* Standardized height to match input boxes */
-    border: 1px solid #dcdcdc;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px; /* Adjusted font size */
-    color: #000;
-    margin-right: 10px; /* Added margin for spacing */
-  }
-
   .reset-btn {
     background-color: #000;
     color: white;
-    padding: 0; /* Set padding to 0 to ensure height is consistent */
-    border-radius: 6px;
-    border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    width: 180px; /* Set width to match label boxes */
-    height: 35px; /* Same height as the labels and input boxes */
     justify-content: center;
     text-align: left;
   }
@@ -99,10 +95,6 @@
 
   .spacer {
     width: 20px;
-  }
-
-  .row > .input-box, .result-box, .reset-btn {
-    margin-right: 10px; /* Adjusted for consistent spacing */
   }
 
   .row:last-child {
