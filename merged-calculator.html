@@ -8,7 +8,7 @@
 
     <!-- Tab Content -->
     <div id="totalProfit" class="tab-content">
-      <!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -216,7 +216,7 @@
 </html>
     </div>
     <div id="averageExitPrice" class="tab-content" style="display: none;">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -473,24 +473,26 @@
     }
 
     .button-tab {
-        background-color: #f0f0f0; /* Background color */
+        background-color: white; /* White background for inactive */
         color: #333; /* Text color */
-        padding: 10px 20px; /* Padding for button size */
+        padding: 8px 15px; /* Padding similar to label size */
         border: 1px solid #dcdcdc; /* Border */
         border-radius: 6px; /* Rounded corners */
         cursor: pointer; /* Pointer on hover */
         font-family: 'Inter', sans-serif; /* Font styling */
-        font-weight: 600; /* Bold text */
+        font-weight: 400; /* Regular weight for inactive */
         transition: background-color 0.3s; /* Transition effect */
+        white-space: nowrap; /* Prevent text wrapping */
     }
 
     .button-tab:hover {
-        background-color: #e0e0e0; /* Darker on hover */
+        background-color: #f0f0f0; /* Background color on hover */
     }
 
     .button-tab.active {
         background-color: #dcdcdc; /* Active button color */
         color: #000; /* Text color for active */
+        font-weight: 600; /* Bold text for active */
     }
 </style>
 
