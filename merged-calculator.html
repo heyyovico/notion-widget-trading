@@ -3,7 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Widgets</title>
+    <title>Trading Calculators</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 20px;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            background-color: #f1f1f1;
+            margin-right: 5px;
+            border-radius: 4px;
+        }
+
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid transparent;
+        }
+
+        .container {
+            display: none; /* Hidden by default */
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .container.active {
+            display: block; /* Show when active */
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div class="tab active" onclick="showTab('profitCalculator')">Total Profit</div>
+    <div class="tab" onclick="showTab('avgExitPriceCalculator')">Average Exit Price</div>
+</div>
+<script>
+    function showTab(tabName) {
+        // Hide all containers
+        const containers = document.querySelectorAll('.container');
+        containers.forEach(container => {
+            container.classList.remove('active');
+        });
+
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Show the selected container and mark the tab as active
+        document.getElementById(tabName).classList.add('active');
+        document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+    }
+</script>
+<div id="profitCalculator" class="container active">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Calculator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -17,34 +85,7 @@
             flex-direction: column;
             align-items: flex-start;
             margin-top: 20px;
-            width: 600px; /* Width of the container */
-        }
-
-        .tab {
-            cursor: pointer;
-            padding: 10px;
-            margin: 0 5px;
-            background-color: #f1f1f1;
-            border: 1px solid #dcdcdc;
-            border-radius: 5px;
-        }
-
-        .tab.active {
-            background-color: #e1e1e1;
-            font-weight: bold;
-        }
-
-        .tab-content {
-            display: none;
-            width: 100%;
-            border: 1px solid #dcdcdc;
-            border-radius: 5px;
-            padding: 20px;
-            background-color: #fff;
-        }
-
-        .tab-content.active {
-            display: block;
+            width: 450px; /* Set container width to 450px */
         }
 
         .row {
@@ -59,7 +100,7 @@
             background-color: #fff;
             border-radius: 6px;
             padding: 8px;
-            width: 160px; /* Increased width to fit label */
+            width: 160px; /* Reduced width for the label box */
             border: 1px solid #dcdcdc;
             display: flex;
             align-items: center;
@@ -76,7 +117,9 @@
             font-weight: 600;
             font-size: 14px;
             color: #333;
+            white-space: nowrap; /* Prevent label from wrapping */
         }
+
         .input-box, .result-box {
             background-color: #fff;
             border-radius: 6px;
@@ -87,7 +130,7 @@
             font-size: 14px;
             color: #000;
             margin-right: 10px;
-            width: 90px; /* Reduced width for input boxes */
+            width: 80px; /* Adjusted width for input boxes */
             height: 35px;
             padding: 6px;
         }
@@ -95,10 +138,6 @@
         .input-box:focus {
             outline: none;
             box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Minimal shadow effect */
-        }
-
-        .input-box:focus::placeholder {
-            color: transparent;
         }
 
         .reset-btn, .copy-btn {
@@ -123,189 +162,364 @@
             border: 1px solid #dcdcdc; /* Adding border for better visibility */
         }
 
-        .error-message {
-            color: red; /* Set text color to red */
-            font-weight: bold; /* Set text to bold */
-            font-family: 'Inter', sans-serif; /* Use the same font as others */
+        .bubble {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-family: 'Inter', sans-serif; /* Match font style */
+        }
+
+        .bubble.show {
+            opacity: 1;
+        }
+
+        /* Styles for the bubble positioning */
+        .bubble-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px; /* Adjust margin for space */
         }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <div class="tabs">
-        <div class="tab active" onclick="openTab(event, 'profitCalculator')">Profit Calculator</div>
-        <div class="tab" onclick="openTab(event, 'averageExitPriceCalculator')">Average Exit Price Calculator</div>
+    <div class="row">
+        <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price</span></div>
+        <input class="input-box" type="text" id="takeProfit1" placeholder="$0.00">
+        <input class="input-box" type="text" id="takeProfit2" placeholder="$0.00">
+        <input class="input-box" type="text" id="takeProfit3" placeholder="$0.00">
     </div>
 
-    <div id="profitCalculator" class="tab-content active">
-        <div class="row">
-            <div class="label-box-container"><i class
-            <input class="input-box" type="text" id="profitPrice" placeholder="$0.00">
+    <div class="row">
+        <div class="label-box-container" style="background-color: white; color: black;">
+            <i class="fas fa-calculator"></i> <span>Total Profit</span>
         </div>
-
-        <div class="row">
-            <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Cost Basis</span></div>
-            <input class="input-box" type="text" id="costBasis" placeholder="$0.00">
+        <div class="result-box" id="totalProfit">$0.00</div>
+        <div class="bubble-container">
+            <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+            <div id="copyBubble" class="bubble"></div>
         </div>
-
-        <div class="row">
-            <div class="label-box-container"><i class="fas fa-percent"></i> <span>Profit Percentage</span></div>
-            <input class="input-box" type="text" id="profitPercentage" placeholder="%">
-        </div>
-
-        <div class="row">
-            <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Calculated Profit</span></div>
-            <div class="result-box" id="calculatedProfit">$0.00</div>
-            <div class="bubble-container">
-                <button class="copy-btn" onclick="copyProfitResult()"><i class="fas fa-copy"></i></button>
-            </div>
-            <div class="bubble-container">
-                <button class="reset-btn" onclick="clearProfitInputs()"><i class="fas fa-sync-alt"></i></button>
-            </div>
+        <div class="bubble-container">
+            <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+            <div id="resetBubble" class="bubble"></div>
         </div>
     </div>
-    <div id="averageExitPriceCalculator" class="tab-content">
-        <div class="row">
-            <div class="label-box-container"><i class="fas fa-percentage"></i> <span>Allocation</span></div>
-            <input class="input-box" type="text" id="allocation1" placeholder="%">
-            <input class="input-box" type="text" id="allocation2" placeholder="%">
-            <input class="input-box" type="text" id="allocation3" placeholder="%">
-        </div>
+</div>
 
-        <div class="row">
-            <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Exit Price</span></div>
-            <input class="input-box" type="text" id="exitPrice1" placeholder="$0.00">
-            <input class="input-box" type="text" id="exitPrice2" placeholder="$0.00">
-            <input class="input-box" type="text" id="exitPrice3" placeholder="$0.00">
-        </div>
-
-        <div class="row">
-            <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
-            <div class="result-box" id="avgExitPrice">$0.00</div>
-            <div class="bubble-container">
-                <button class="copy-btn" onclick="copyAverageExitPriceResult()"><i class="fas fa-copy"></i></button>
-            </div>
-            <div class="bubble-container">
-                <button class="reset-btn" onclick="clearAverageExitPriceInputs()"><i class="fas fa-sync-alt"></i></button>
-            </div>
-        </div>
-    </div>
 <script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("active");
-        }
-
-        tablinks = document.getElementsByClassName("tab");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
+    function clearInputs() {
+        document.getElementById('takeProfit1').value = '';
+        document.getElementById('takeProfit2').value = '';
+        document.getElementById('takeProfit3').value = '';
+        document.getElementById('totalProfit').innerText = '$0.00'; // Reset total profit to $0.00
+        showBubble('Cleared!', 'resetBubble');
+        calculateTotalProfit(); // Update total profit after clearing
     }
 
-    function clearProfitInputs() {
-        document.getElementById('profitPrice').value = '';
-        document.getElementById('costBasis').value = '';
-        document.getElementById('profitPercentage').value = '';
-        document.getElementById('calculatedProfit').innerText = '$0.00'; // Reset profit
+    function copyResult() {
+        const resultText = document.getElementById('totalProfit').innerText;
+        const tempInput = document.createElement('input');
+        tempInput.value = resultText;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showBubble('Copied!', 'copyBubble');
     }
 
-    function copyProfitResult() {
-        const resultText = document.getElementById('calculatedProfit').innerText;
-        navigator.clipboard.writeText(resultText).then(() => {
-            alert('Profit result copied to clipboard!');
-        });
+    function showBubble(message, bubbleId) {
+        const bubble = document.getElementById(bubbleId);
+        bubble.innerText = message;
+        bubble.classList.add('show');
+
+        setTimeout(() => {
+            bubble.classList.remove('show');
+        }, 1000);
     }
 
-    function calculateProfit() {
-        const profitPrice = parseFloat(document.getElementById('profitPrice').value.replace('$', '')) || 0;
-        const costBasis = parseFloat(document.getElementById('costBasis').value.replace('$', '')) || 0;
-        const profitPercentage = parseFloat(document.getElementById('profitPercentage').value) || 0;
-
-        if (profitPercentage < 0) {
-            document.getElementById('calculatedProfit').innerText = '<span class="error-message">ERROR</span>'; // Error message
-            return;
-        }
-
-        const profit = (profitPrice - costBasis) * (profitPercentage / 100);
-        document.getElementById('calculatedProfit').innerText = formatDollar(profit);
-    }
-    function clearAverageExitPriceInputs() {
-        document.getElementById('allocation1').value = '';
-        document.getElementById('allocation2').value = '';
-        document.getElementById('allocation3').value = '';
-        document.getElementById('exitPrice1').value = '';
-        document.getElementById('exitPrice2').value = '';
-        document.getElementById('exitPrice3').value = '';
-        document.getElementById('avgExitPrice').innerText = '$0.00'; // Reset average exit price
-    }
-
-    function copyAverageExitPriceResult() {
-        const resultText = document.getElementById('avgExitPrice').innerText;
-        navigator.clipboard.writeText(resultText).then(() => {
-            alert('Average exit price copied to clipboard!');
-        });
-    }
-
-    function calculateAverageExitPrice() {
-        const allocations = [
-            parseFloat(document.getElementById('allocation1').value) / 100 || 0,
-            parseFloat(document.getElementById('allocation2').value) / 100 || 0,
-            parseFloat(document.getElementById('allocation3').value) / 100 || 0
-        ];
-
-        const exitPrices = [
-            parseFloat(document.getElementById('exitPrice1').value.replace('$', '')) || 0,
-            parseFloat(document.getElementById('exitPrice2').value.replace('$', '')) || 0,
-            parseFloat(document.getElementById('exitPrice3').value.replace('$', '')) || 0
-        ];
-
-        let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
-
-        // Check if total allocation exceeds 100%
-        if (totalAllocation > 1) {
-            document.getElementById('avgExitPrice').innerHTML = '<span class="error-message">ERROR</span>'; // Set error message
-            return;
-        }
-
-        if (totalAllocation === 0) {
-            document.getElementById('avgExitPrice').innerText = '$0.00';
-            return;
-        }
-
-        let weightedSum = 0;
-        for (let i = 0; i < allocations.length; i++) {
-            weightedSum += allocations[i] * exitPrices[i];
-        }
-
-        let avgExitPrice = weightedSum / totalAllocation;
-        document.getElementById('avgExitPrice').innerText = formatDollar(avgExitPrice);
-    }
     function formatDollar(value) {
         return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
     }
 
-    document.querySelectorAll('.input-box').forEach((input, idx) => {
+    function calculateTotalProfit() {
+        const takeProfits = [
+            parseFloat(document.getElementById('takeProfit1').value.replace('$', '')) || 0,
+            parseFloat(document.getElementById('takeProfit2').value.replace('$', '')) || 0,
+            parseFloat(document.getElementById('takeProfit3').value.replace('$', '')) || 0
+        ];
+
+        // Calculate total profit
+        const totalProfit = takeProfits.reduce((sum, val) => sum + val, 0);
+        document.getElementById('totalProfit').innerText = formatDollar(totalProfit);
+    }
+
+    document.querySelectorAll('.input-box').forEach((input) => {
         input.addEventListener('blur', function () {
-            if (idx < 3) {
-                const value = parseFloat(input.value) || 0;
-                input.value = formatPercentage(value);
-            } else {
-                const value = parseFloat(input.value.replace('$', '')) || 0;
-                input.value = formatDollar(value);
-            }
-            if (input.closest('#profitCalculator')) {
-                calculateProfit();
-            } else {
-                calculateAverageExitPrice();
-            }
+            const value = parseFloat(input.value.replace('$', '')) || 0;
+            input.value = formatDollar(value); // Format as dollar when losing focus
+            calculateTotalProfit(); // Update total profit
         });
+        
+        input.addEventListener('input', calculateTotalProfit); // Calculate on input change
     });
 </script>
+
+</body>
+</html>
+<div id="avgExitPriceCalculator" class="container">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+    width: 600px; /* Width of the container */
+  }
+
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .label-box-container {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 8px;
+    width: 160px; /* Increased width to fit label */
+    border: 1px solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .label-box-container i {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+
+  .label-box-container span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .input-box, .result-box {
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+    margin-right: 10px;
+    width: 90px; /* Reduced width for input boxes */
+    height: 35px;
+    padding: 6px;
+  }
+
+  .input-box:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Minimal shadow effect */
+  }
+
+  .input-box:focus::placeholder {
+    color: transparent;
+  }
+
+  .reset-btn, .copy-btn {
+    background-color: transparent;
+    color: grey;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px; /* Increased icon size */
+  }
+
+  .reset-btn:hover, .copy-btn:hover {
+    color: #333;
+  }
+
+  .result-box {
+    font-weight: bold;
+    padding: 6px;
+    border: 1px solid #dcdcdc; /* Adding border for better visibility */
+  }
+
+  .error-message {
+    color: red; /* Set text color to red */
+    font-weight: bold; /* Set text to bold */
+    font-family: 'Inter', sans-serif; /* Use the same font as others */
+  }
+
+  .bubble {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-family: 'Inter', sans-serif; /* Match font style */
+  }
+
+  .bubble.show {
+    opacity: 1;
+  }
+
+  /* Styles for the bubble positioning */
+  .bubble-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px; /* Adjust margin for space */
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="label-box-container"><i class="fas fa-percentage"></i> <span>Allocation</span></div>
+    <input class="input-box" type="text" id="allocation1" placeholder="%">
+    <input class="input-box" type="text" id="allocation2" placeholder="%">
+    <input class="input-box" type="text" id="allocation3" placeholder="%">
+  </div>
+
+  <div class="row">
+    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Exit Price</span></div>
+    <input class="input-box" type="text" id="exitPrice1" placeholder="$0.00">
+    <input class="input-box" type="text" id="exitPrice2" placeholder="$0.00">
+    <input class="input-box" type="text" id="exitPrice3" placeholder="$0.00">
+  </div>
+
+  <div class="row">
+    <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
+    <div class="result-box" id="avgExitPrice">$0.00</div>
+    <div class="bubble-container">
+      <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+      <div id="copyBubble" class="bubble"></div>
+    </div>
+    <div class="bubble-container">
+      <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+      <div id="resetBubble" class="bubble"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function clearInputs() {
+    document.getElementById('allocation1').value = '';
+    document.getElementById('allocation2').value = '';
+    document.getElementById('allocation3').value = '';
+    document.getElementById('exitPrice1').value = '';
+    document.getElementById('exitPrice2').value = '';
+    document.getElementById('exitPrice3').value = '';
+    document.getElementById('avgExitPrice').innerText = '$0.00'; // Changed to 2 decimal places
+    showBubble('Cleared!', 'resetBubble');
+  }
+
+  function copyResult() {
+    const resultText = document.getElementById('avgExitPrice').innerText;
+    const tempInput = document.createElement('input');
+    tempInput.value = resultText;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showBubble('Copied!', 'copyBubble');
+  }
+
+  function showBubble(message, bubbleId) {
+    const bubble = document.getElementById(bubbleId);
+    bubble.innerText = message;
+    bubble.classList.add('show');
+
+    setTimeout(() => {
+      bubble.classList.remove('show');
+    }, 1000);
+  }
+
+  function formatPercentage(value) {
+    if (value >= 1) {
+      return value.toFixed(0) + '%'; // Keep the percentage format for whole numbers
+    } else {
+      return (value * 100).toFixed(0) + '%'; // Format decimal to percentage
+    }
+  }
+
+  function formatDollar(value) {
+    return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
+  }
+
+  function calculateAverageExitPrice() {
+    const allocations = [
+      parseFloat(document.getElementById('allocation1').value) / 100 || 0,
+      parseFloat(document.getElementById('allocation2').value) / 100 || 0,
+      parseFloat(document.getElementById('allocation3').value) / 100 || 0
+    ];
+
+    const exitPrices = [
+      parseFloat(document.getElementById('exitPrice1').value.replace('$', '')) || 0,
+      parseFloat(document.getElementById('exitPrice2').value.replace('$', '')) || 0,
+      parseFloat(document.getElementById('exitPrice3').value.replace('$', '')) || 0
+    ];
+
+    let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
+
+    // Check if total allocation exceeds 100%
+    if (totalAllocation > 1) {
+      document.getElementById('avgExitPrice').innerHTML = '<span class="error-message">ERROR</span>'; // Set error message
+      return;
+    }
+
+    if (totalAllocation === 0) {
+      document.getElementById('avgExitPrice').innerText = '$0.00';
+      return;
+    }
+
+    let weightedSum = 0;
+    for (let i = 0; i < allocations.length; i++) {
+      weightedSum += allocations[i] * exitPrices[i];
+    }
+
+    let avgExitPrice = weightedSum / totalAllocation;
+    document.getElementById('avgExitPrice').innerText = formatDollar(avgExitPrice);
+  }
+
+  document.querySelectorAll('.input-box').forEach((input, idx) => {
+    input.addEventListener('blur', function () {
+      if (idx < 3) {
+        const value = parseFloat(input.value) || 0;
+        input.value = formatPercentage(value);
+      } else {
+        const value = parseFloat(input.value.replace('$', '')) || 0;
+        input.value = formatDollar(value);
+      }
+      calculateAverageExitPrice();
+    });
+  });
+</script>
+</div>
+</div>
 </body>
 </html>
