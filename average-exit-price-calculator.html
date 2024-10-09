@@ -105,17 +105,21 @@
     font-family: 'Inter', sans-serif; /* Use the same font as others */
   }
 
-  .bubble {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.75);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    font-family: 'Inter', sans-serif; /* Match font style */
-  }
+.bubble {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-family: 'Inter', sans-serif; /* Match font style */
+  white-space: nowrap; /* Prevents wrapping of text */
+  left: 120%; /* Shift the bubble to the right of the button */
+  top: 50%; /* Center the bubble vertically relative to the button */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+}
 
   .bubble.show {
     opacity: 1;
