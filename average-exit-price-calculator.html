@@ -46,22 +46,7 @@
     color: #333;
   }
 
-  .input-box, .reset-btn {
-    background-color: #fff;
-    border-radius: 6px;
-    border: 1px solid #dcdcdc;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    color: #000;
-    margin-right: 10px; /* Use consistent spacing */
-    width: 150px; /* Standardized width */
-    height: 35px; /* Standardized height */
-    padding: 6px; /* Standardized padding */
-  }
-
-  .result-box {
+  .input-box, .result-box {
     background-color: #fff;
     border-radius: 6px;
     border: 1px solid #dcdcdc;
@@ -70,32 +55,25 @@
     font-weight: 400;
     font-size: 14px; /* Same font size as input boxes */
     color: #000;
-    width: 150px; /* Match width to input boxes */
-    height: 35px; /* Match height to input boxes */
-    padding: 6px; /* Match padding to input boxes */
     margin-right: 10px; /* Use consistent spacing */
+    width: 150px; /* Standardized width */
+    height: 35px; /* Standardized height */
+    padding: 6px; /* Standardized padding */
   }
 
   .input-box:focus {
     color: #000;
   }
 
-  .reset-btn {
-    background-color: #000;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  .reset-icon {
+    color: #a0a0a0; /* Light grey color */
+    cursor: pointer;
+    font-size: 20px; /* Icon size */
+    transition: color 0.3s;
   }
 
-  .reset-btn:hover {
-    background-color: lightgray; /* Light gray hover effect */
-  }
-
-  .reset-btn i {
-    margin-right: 10px;
+  .reset-icon:hover {
+    color: #8c8c8c; /* Darker grey on hover */
   }
 
   .spacer {
@@ -125,12 +103,8 @@
   <div class="row">
     <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
     <div class="result-box" id="avgExitPrice">0.000</div>
-  </div>
-
-  <div class="row" style="margin-top: 10px;">
-    <div class="reset-btn" onclick="clearInputs()">
+    <div class="reset-icon" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
-      Reset
     </div>
   </div>
 </div>
