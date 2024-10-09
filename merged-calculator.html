@@ -1,4 +1,4 @@
-<div class="container" style="width: 500px; background-color: transparent;">
+<div class="container" style="width: 650px; background-color: transparent;">
     <!-- Button Tabs -->
     <div class="button-tabs" style="display: flex; margin-bottom: 10px;">
         <div class="button-tab active" onclick="showTab('totalProfit')">Total Profit</div>
@@ -7,7 +7,7 @@
 
     <!-- Tab Content -->
     <div id="totalProfit" class="tab-content">
-        <!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -215,7 +215,7 @@
 </html>
     </div>
     <div id="averageExitPrice" class="tab-content" style="display: none;">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -263,7 +263,8 @@
     color: #333;
   }
 
-  .input-box, .result-box {
+  .input-box,
+  .result-box {
     background-color: #fff;
     border-radius: 6px;
     border: 1px solid #dcdcdc;
@@ -287,7 +288,8 @@
     color: transparent;
   }
 
-  .reset-btn, .copy-btn {
+  .reset-btn,
+  .copy-btn {
     background-color: transparent;
     color: grey;
     border: none;
@@ -299,7 +301,8 @@
     font-size: 18px; /* Increased icon size */
   }
 
-  .reset-btn:hover, .copy-btn:hover {
+  .reset-btn:hover,
+  .copy-btn:hover {
     color: #333;
   }
 
@@ -367,16 +370,18 @@
     </div>
   </div>
 </div>
-
 <script>
   function clearInputs() {
+    // Clear the inputs
     document.getElementById('allocation1').value = '';
     document.getElementById('allocation2').value = '';
     document.getElementById('allocation3').value = '';
     document.getElementById('exitPrice1').value = '';
     document.getElementById('exitPrice2').value = '';
     document.getElementById('exitPrice3').value = '';
-    document.getElementById('avgExitPrice').innerText = '$0.00'; // Changed to 2 decimal places
+    document.getElementById('avgExitPrice').innerText = '$0.00';
+
+    // Show bubble if the second tab is active
     showBubble('Cleared!', 'resetBubble');
   }
 
@@ -388,17 +393,30 @@
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
+
+    // Show bubble if the second tab is active
     showBubble('Copied!', 'copyBubble');
   }
 
   function showBubble(message, bubbleId) {
-    const bubble = document.getElementById(bubbleId);
-    bubble.innerText = message;
-    bubble.classList.add('show');
+    // Get the active tab
+    const activeTab = document.querySelector('.button-tab.active').textContent.trim();
 
-    setTimeout(() => {
-      bubble.classList.remove('show');
-    }, 1000);
+    // Only show the bubble if the active tab matches the expected tab
+    if ((activeTab === 'Total Profit' && bubbleId === 'resetBubble') ||
+        (activeTab === 'Average Exit Price' && bubbleId === 'copyBubble')) {
+        const bubble = document.getElementById(bubbleId);
+        bubble.innerText = message;
+        bubble.classList.add('show');
+
+        // Optional: Adjust bubble position if needed
+        bubble.style.top = '20px'; // Adjust this value as needed
+        bubble.style.left = '100%'; // Adjust this value as needed
+
+        setTimeout(() => {
+            bubble.classList.remove('show');
+        }, 1000);
+    }
   }
 
   function formatPercentage(value) {
@@ -444,22 +462,17 @@
       weightedSum += allocations[i] * exitPrices[i];
     }
 
-    let avgExitPrice = weightedSum / totalAllocation;
+       let avgExitPrice = weightedSum / totalAllocation;
     document.getElementById('avgExitPrice').innerText = formatDollar(avgExitPrice);
   }
 
-  document.querySelectorAll('.input-box').forEach((input, idx) => {
-    input.addEventListener('blur', function () {
-      if (idx < 3) {
-        const value = parseFloat(input.value) || 0;
-        input.value = formatPercentage(value);
-      } else {
-        const value = parseFloat(input.value.replace('$', '')) || 0;
-        input.value = formatDollar(value);
-      }
-      calculateAverageExitPrice();
-    });
-  });
+  // Event listeners to recalculate on input change
+  document.getElementById('allocation1').addEventListener('input', calculateAverageExitPrice);
+  document.getElementById('allocation2').addEventListener('input', calculateAverageExitPrice);
+  document.getElementById('allocation3').addEventListener('input', calculateAverageExitPrice);
+  document.getElementById('exitPrice1').addEventListener('input', calculateAverageExitPrice);
+  document.getElementById('exitPrice2').addEventListener('input', calculateAverageExitPrice);
+  document.getElementById('exitPrice3').addEventListener('input', calculateAverageExitPrice);
 </script>
     </div>
 </div>
