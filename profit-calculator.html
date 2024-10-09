@@ -195,5 +195,7 @@
       input.value = formatDollar(value); // Format as dollar when losing focus
       calculateTotalProfit(); // Update total profit
     });
+    
+    input.addEventListener('input', calculateTotalProfit); // Calculate on input change
   });
 </script>
