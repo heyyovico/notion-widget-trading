@@ -27,7 +27,7 @@
     background-color: #fff;
     border-radius: 6px;
     padding: 8px;
-    width: 140px; /* Reduced width to fit label */
+    width: 140px; /* Width to fit label */
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
@@ -138,9 +138,7 @@
   </div>
 
   <div class="row">
-    <div class="label-box-container" style="background-color: white; color: black;">
-      <i class="fas fa-calculator"></i> <span>Average Exit Price</span>
-    </div>
+    <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
     <div class="result-box" id="avgExitPrice">$0.00</div>
     <div class="bubble-container">
       <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
@@ -246,4 +244,3 @@
     });
   });
 </script>
-``
