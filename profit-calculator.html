@@ -70,32 +70,26 @@
     color: transparent;
   }
 
-  .calculate-btn, .copy-btn, .reset-btn {
-    background-color: #4CAF50; /* Green */
-    color: white;
+  .reset-btn, .copy-btn {
+    background-color: transparent;
+    color: grey;
     border: none;
     cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    margin-right: 5px; /* Space between buttons */
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px; /* Increased icon size */
   }
 
-  .calculate-btn:hover, .copy-btn:hover, .reset-btn:hover {
-    background-color: #45a049; /* Darker green */
+  .reset-btn:hover, .copy-btn:hover {
+    color: #333;
   }
 
   .result-box {
     font-weight: bold;
     padding: 6px;
     border: 1px solid #dcdcdc; /* Adding border for better visibility */
-  }
-
-  .error-message {
-    color: red; /* Set text color to red */
-    font-weight: bold; /* Set text to bold */
-    font-family: 'Inter', sans-serif; /* Use the same font as others */
   }
 
   .bubble {
@@ -120,71 +114,86 @@
     display: inline-block;
     margin-left: 5px; /* Adjust margin for space */
   }
-
-  .dollar-placeholder {
-    font-size: 12px; /* Placeholder size */
-    color: #888; /* Placeholder color */
-    margin-top: -6px; /* Adjust for spacing */
-  }
 </style>
 
 <div class="container">
   <div class="row">
-    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price</span></div>
-    <input class="input-box" type="text" id="takeProfitPrice1" placeholder="$0.00" oninput="calculateProfit()">
-    <input class="input-box" type="text" id="takeProfitPrice2" placeholder="$0.00" oninput="calculateProfit()">
-    <input class="input-box" type="text" id="takeProfitPrice3" placeholder="$0.00" oninput="calculateProfit()">
+    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price 1</span></div>
+    <input class="input-box" type="text" id="takeProfit1" placeholder="$0.00">
+    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price 2</span></div>
+    <input class="input-box" type="text" id="takeProfit2" placeholder="$0.00">
+    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price 3</span></div>
+    <input class="input-box" type="text" id="takeProfit3" placeholder="$0.00">
   </div>
 
   <div class="row">
     <div class="label-box-container" style="background-color: white; color: black;">
       <i class="fas fa-calculator"></i> <span>Total Profit</span>
     </div>
-    <div class="result-box" id="profitResult">$0.00</div>
-    <button class="calculate-btn" onclick="calculateProfit()">Calculate</button>
-    <button class="copy-btn" onclick="copyResult()">Copy</button>
-    <button class="reset-btn" onclick="resetCalculator()">Reset</button>
-  </div>
-
-  <div class="row">
-    <div class="dollar-placeholder">$</div>
-    <div class="dollar-placeholder">$</div>
-    <div class="dollar-placeholder">$</div>
+    <div class="result-box" id="totalProfit">$0.00</div>
+    <div class="bubble-container">
+      <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+      <div id="copyBubble" class="bubble"></div>
+    </div>
+    <div class="bubble-container">
+      <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+      <div id="resetBubble" class="bubble"></div>
+    </div>
   </div>
 </div>
 
 <script>
+  function clearInputs() {
+    document.getElementById('takeProfit1').value = '';
+    document.getElementById('takeProfit2').value = '';
+    document.getElementById('takeProfit3').value = '';
+    document.getElementById('totalProfit').innerText = '$0.00'; // Reset total profit to $0.00
+    showBubble('Cleared!', 'resetBubble');
+    calculateTotalProfit(); // Update total profit after clearing
+  }
+
+  function copyResult() {
+    const resultText = document.getElementById('totalProfit').innerText;
+    const tempInput = document.createElement('input');
+    tempInput.value = resultText;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showBubble('Copied!', 'copyBubble');
+  }
+
+  function showBubble(message, bubbleId) {
+    const bubble = document.getElementById(bubbleId);
+    bubble.innerText = message;
+    bubble.classList.add('show');
+
+    setTimeout(() => {
+      bubble.classList.remove('show');
+    }, 1000);
+  }
+
   function formatDollar(value) {
     return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
   }
 
-  function calculateProfit() {
-    const takeProfitPrices = [
-      parseFloat(document.getElementById('takeProfitPrice1').value.replace('$', '')) || 0,
-      parseFloat(document.getElementById('takeProfitPrice2').value.replace('$', '')) || 0,
-      parseFloat(document.getElementById('takeProfitPrice3').value.replace('$', '')) || 0
+  function calculateTotalProfit() {
+    const takeProfits = [
+      parseFloat(document.getElementById('takeProfit1').value.replace('$', '')) || 0,
+      parseFloat(document.getElementById('takeProfit2').value.replace('$', '')) || 0,
+      parseFloat(document.getElementById('takeProfit3').value.replace('$', '')) || 0
     ];
 
-    // Example calculation (sum of Take Profit Prices)
-    const totalProfit = takeProfitPrices.reduce((sum, val) => sum + val, 0);
-    
-    // Update the result box automatically
-    document.getElementById('profitResult').innerText = formatDollar(totalProfit);
+    // Calculate total profit
+    const totalProfit = takeProfits.reduce((sum, val) => sum + val, 0);
+    document.getElementById('totalProfit').innerText = formatDollar(totalProfit);
   }
 
-  function copyResult() {
-    const result = document.getElementById('profitResult').innerText;
-    navigator.clipboard.writeText(result).then(() => {
-      alert('Total Profit copied to clipboard: ' + result);
-    }).catch(err => {
-      console.error('Error copying text: ', err);
+  document.querySelectorAll('.input-box').forEach((input) => {
+    input.addEventListener('blur', function () {
+      const value = parseFloat(input.value.replace('$', '')) || 0;
+      input.value = formatDollar(value); // Format as dollar when losing focus
+      calculateTotalProfit(); // Update total profit
     });
-  }
-
-  function resetCalculator() {
-    document.getElementById('takeProfitPrice1').value = '';
-    document.getElementById('takeProfitPrice2').value = '';
-    document.getElementById('takeProfitPrice3').value = '';
-    document.getElementById('profitResult').innerText = '$0.00';
-  }
+  });
 </script>
