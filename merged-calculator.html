@@ -6,55 +6,259 @@
     <title>Calculator Tabs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
         body {
             font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tab-container {
+            width: 650px; /* Resized container */
+            margin: 20px auto; /* Centering the container */
         }
 
         .tabs {
             display: flex;
-            cursor: pointer;
-            margin: 20px 0;
+            border-bottom: 2px solid #dcdcdc;
         }
 
         .tab {
-            padding: 10px 20px;
-            border: 1px solid #dcdcdc;
-            border-bottom: none;
-            background-color: #f1f1f1;
-            margin-right: 5px;
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold; /* Bold text for tabs */
+            transition: background-color 0.3s ease;
         }
 
         .tab.active {
             background-color: white;
-            border-bottom: 1px solid white;
+            border-bottom: 2px solid transparent; /* Underline active tab */
+            color: black; /* Active tab text color */
         }
 
-        .tab-content {
-            border: 1px solid #dcdcdc;
-            padding: 20px;
-            background-color: white;
+        .tab.inactive {
+            background-color: lightgrey; /* Inactive tab color */
+            color: #666; /* Lighter text for inactive tab */
         }
 
-        .hidden {
-            display: none;
+        .content {
+            padding: 20px; /* Padding around the content */
+            border: 1px solid #dcdcdc; /* Border for the content area */
+            background-color: white; /* Background color for the content area */
         }
     </style>
 </head>
 <body>
-    <div class="tabs">
-        <div class="tab active" onclick="showTab(1)">Profit Calculator</div>
-        <div class="tab" onclick="showTab(2)">Average Exit Price Calculator</div>
-    </div>
-    <div class="tab-content" id="tab1">
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Profit Calculator</title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <div class="tab-container">
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('profitCalculator')">Profit Calculator</div>
+            <div class="tab inactive" onclick="showTab('avgExitPriceCalculator')">Average Exit Price Calculator</div>
+        </div>
+        <div class="content" id="profitCalculator">
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Profit Calculator</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+                    * {
+                        box-sizing: border-box;
+                    }
+
+                    .container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        margin-top: 20px;
+                        width: 450px; /* Set container width to 450px */
+                    }
+
+                    .row {
+                        display: flex;
+                        width: 100%;
+                        justify-content: flex-start;
+                        align-items: center;
+                        margin-bottom: 10px;
+                    }
+
+                    .label-box-container {
+                        background-color: #fff;
+                        border-radius: 6px;
+                        padding: 8px;
+                        width: 160px; /* Reduced width for the label box */
+                        border: 1px solid #dcdcdc;
+                        display: flex;
+                        align-items: center;
+                        margin-right: 10px;
+                    }
+
+                    .label-box-container i {
+                        margin-right: 8px;
+                        font-size: 14px;
+                    }
+
+                    .label-box-container span {
+                        font-family: 'Inter', sans-serif;
+                        font-weight: 600;
+                        font-size: 14px;
+                        color: #333;
+                        white-space: nowrap; /* Prevent label from wrapping */
+                    }
+
+                    .input-box, .result-box {
+                        background-color: #fff;
+                        border-radius: 6px;
+                        border: 1px solid #dcdcdc;
+                        text-align: center;
+                        font-family: 'Inter', sans-serif;
+                        font-weight: 400;
+                        font-size: 14px;
+                        color: #000;
+                        margin-right: 10px;
+                        width: 80px; /* Adjusted width for input boxes */
+                        height: 35px;
+                        padding: 6px;
+                    }
+
+                    .input-box:focus {
+                        outline: none;
+                        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Minimal shadow effect */
+                    }
+
+                    .reset-btn, .copy-btn {
+                        background-color: transparent;
+                        color: grey;
+                        border: none;
+                        cursor: pointer;
+                        margin-right: 5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 18px; /* Increased icon size */
+                    }
+
+                    .reset-btn:hover, .copy-btn:hover {
+                        color: #333;
+                    }
+
+                    .result-box {
+                        font-weight: bold;
+                        padding: 6px;
+                        border: 1px solid #dcdcdc; /* Adding border for better visibility */
+                    }
+
+                    .bubble {
+                        position: absolute;
+                        background-color: rgba(0, 0, 0, 0.75);
+                        color: white;
+                        padding: 5px 10px;
+                        border-radius: 5px;
+                        font-size: 12px;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                        font-family: 'Inter', sans-serif; /* Match font style */
+                    }
+
+                    .bubble.show {
+                        opacity: 1;
+                    }
+
+                    /* Styles for the bubble positioning */
+                    .bubble-container {
+                        position: relative;
+                        display: inline-block;
+                        margin-left: 5px; /* Adjust margin for space */
+                    }
+                </style>
+            </head>
+            <body>
+            <div class="container">
+                <div class="row">
+                    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price</span></div>
+                    <input class="input-box" type="text" id="takeProfit1" placeholder="$0.00">
+                    <input class="input-box" type="text" id="takeProfit2" placeholder="$0.00">
+                    <input class="input-box" type="text" id="takeProfit3" placeholder="$0.00">
+                </div>
+                <div class="row">
+                    <div class="label-box-container" style="background-color: white; color: black;">
+                        <i class="fas fa-calculator"></i> <span>Total Profit</span>
+                    </div>
+                    <div class="result-box" id="totalProfit">$0.00</div>
+                    <div class="bubble-container">
+                        <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+                        <div id="copyBubble" class="bubble"></div>
+                    </div>
+                    <div class="bubble-container">
+                        <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+                        <div id="resetBubble" class="bubble"></div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function clearInputs() {
+                    document.getElementById('takeProfit1').value = '';
+                    document.getElementById('takeProfit2').value = '';
+                    document.getElementById('takeProfit3').value = '';
+                    document.getElementById('totalProfit').innerText = '$0.00'; // Reset total profit to $0.00
+                    showBubble('Cleared!', 'resetBubble');
+                    calculateTotalProfit(); // Update total profit after clearing
+                }
+
+                function copyResult() {
+                    const resultText = document.getElementById('totalProfit').innerText;
+                    const tempInput = document.createElement('input');
+                    tempInput.value = resultText;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    showBubble('Copied!', 'copyBubble');
+                }
+
+                function showBubble(message, bubbleId) {
+                    const bubble = document.getElementById(bubbleId);
+                    bubble.innerText = message;
+                    bubble.classList.add('show');
+
+                    setTimeout(() => {
+                        bubble.classList.remove('show');
+                    }, 1000);
+                }
+
+                function formatDollar(value) {
+                    return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
+                }
+
+                function calculateTotalProfit() {
+                    const takeProfits = [
+                        parseFloat(document.getElementById('takeProfit1').value.replace('$', '')) || 0,
+                        parseFloat(document.getElementById('takeProfit2').value.replace('$', '')) || 0,
+                        parseFloat(document.getElementById('takeProfit3').value.replace('$', '')) || 0
+                    ];
+
+                    // Calculate total profit
+                    const totalProfit = takeProfits.reduce((sum, val) => sum + val, 0);
+                    document.getElementById('totalProfit').innerText = formatDollar(totalProfit);
+                }
+
+                document.querySelectorAll('.input-box').forEach((input) => {
+                    input.addEventListener('blur', function () {
+                        const
+                        const value = parseFloat(input.value.replace('$', '')) || 0;
+                        input.value = formatDollar(value);
+                        calculateTotalProfit(); // Recalculate total profit when input loses focus
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="content" id="avgExitPriceCalculator" style="display:none;">            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
@@ -82,7 +286,7 @@
                     background-color: #fff;
                     border-radius: 6px;
                     padding: 8px;
-                    width: 160px; /* Reduced width for the label box */
+                    width: 160px; /* Increased width to fit label */
                     border: 1px solid #dcdcdc;
                     display: flex;
                     align-items: center;
@@ -99,7 +303,6 @@
                     font-weight: 600;
                     font-size: 14px;
                     color: #333;
-                    white-space: nowrap; /* Prevent label from wrapping */
                 }
 
                 .input-box, .result-box {
@@ -112,7 +315,7 @@
                     font-size: 14px;
                     color: #000;
                     margin-right: 10px;
-                    width: 80px; /* Adjusted width for input boxes */
+                    width: 90px; /* Reduced width for input boxes */
                     height: 35px;
                     padding: 6px;
                 }
@@ -120,6 +323,10 @@
                 .input-box:focus {
                     outline: none;
                     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Minimal shadow effect */
+                }
+
+                .input-box:focus::placeholder {
+                    color: transparent;
                 }
 
                 .reset-btn, .copy-btn {
@@ -142,6 +349,12 @@
                     font-weight: bold;
                     padding: 6px;
                     border: 1px solid #dcdcdc; /* Adding border for better visibility */
+                }
+
+                .error-message {
+                    color: red; /* Set text color to red */
+                    font-weight: bold; /* Set text to bold */
+                    font-family: 'Inter', sans-serif; /* Use the same font as others */
                 }
 
                 .bubble {
@@ -167,94 +380,7 @@
                     margin-left: 5px; /* Adjust margin for space */
                 }
             </style>
-        </head>
-        <body>
-        <div class="container">
-            <div class="row">
-                <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price</span></div>
-                <input class="input-box" type="text" id="takeProfit1" placeholder="$0.00">
-                <input class="input-box" type="text" id="takeProfit2" placeholder="$0.00">
-                <input class="input-box" type="text" id="takeProfit3" placeholder="$0.00">
-            </div>
 
-            <div class="row">
-                <div class="label-box-container" style="background-color: white; color: black;">
-                    <i class="fas fa-calculator"></i> <span>Total Profit</span>
-                </div>
-                <div class="result-box" id="totalProfit">$0.00</div>
-                <div class="bubble-container">
-                    <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
-                    <div id="copyBubble" class="bubble"></div>
-                </div>
-                <div class="bubble-container">
-                    <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
-                    <div id="resetBubble" class="bubble"></div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            function clearInputs() {
-                document.getElementById('takeProfit1').value = '';
-                document.getElementById('takeProfit2').value = '';
-                document.getElementById('takeProfit3').value = '';
-                document.getElementById('totalProfit').innerText = '$0.00'; // Reset total profit to $0.00
-                showBubble('Cleared!', 'resetBubble');
-                calculateTotalProfit(); // Update total profit after clearing
-            }
-
-            function copyResult() {
-                const resultText = document.getElementById('totalProfit').innerText;
-                const tempInput = document.createElement('input');
-                tempInput.value = resultText;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                showBubble('Copied!', 'copyBubble');
-            }
-
-            function showBubble(message, bubbleId) {
-                const bubble = document.getElementById(bubbleId);
-                bubble.innerText = message;
-                bubble.classList.add('show');
-
-                setTimeout(() => {
-                    bubble.classList.remove('show');
-                }, 1000);
-            }
-
-            function formatDollar(value) {
-                return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
-            }
-
-            function calculateTotalProfit() {
-                const takeProfits = [
-                    parseFloat(document.getElementById('takeProfit1').value.replace('$', '')) || 0,
-                    parseFloat(document.getElementById('takeProfit2').value.replace('$', '')) || 0,
-                    parseFloat(document.getElementById('takeProfit3').value.replace('$', '')) || 0
-                ];
-
-                // Calculate total profit
-                const totalProfit = takeProfits.reduce((sum, val) => sum + val, 0);
-                document.getElementById('totalProfit').innerText = formatDollar(totalProfit);
-            }
-
-            document.querySelectorAll('.input-box').forEach((input) => {
-                input.addEventListener('blur', function () {
-                    const value = parseFloat(input.value.replace('$', '')) || 0;
-                    input.value = formatDollar(value); // Format as dollar when losing focus
-                    calculateTotalProfit(); // Update total profit
-                });
-                
-                input.addEventListener('input', calculateTotalProfit); // Calculate on input change
-            });
-        </script>
-        </body>
-        </html>
-        </div        </div>
-
-        <div class="tab-content hidden" id="tab2">
             <div class="container">
                 <div class="row">
                     <div class="label-box-container"><i class="fas fa-percentage"></i> <span>Allocation</span></div>
@@ -292,7 +418,7 @@
                     document.getElementById('exitPrice1').value = '';
                     document.getElementById('exitPrice2').value = '';
                     document.getElementById('exitPrice3').value = '';
-                    document.getElementById('avgExitPrice').innerText = '$0.00';
+                    document.getElementById('avgExitPrice').innerText = '$0.00'; // Changed to 2 decimal places
                     showBubble('Cleared!', 'resetBubble');
                 }
 
@@ -319,14 +445,14 @@
 
                 function formatPercentage(value) {
                     if (value >= 1) {
-                        return value.toFixed(0) + '%';
+                        return value.toFixed(0) + '%'; // Keep the percentage format for whole numbers
                     } else {
-                        return (value * 100).toFixed(0) + '%';
+                        return (value * 100).toFixed(0) + '%'; // Format decimal to percentage
                     }
                 }
 
                 function formatDollar(value) {
-                    return '$' + parseFloat(value).toFixed(2);
+                    return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
                 }
 
                 function calculateAverageExitPrice() {
@@ -346,7 +472,7 @@
 
                     // Check if total allocation exceeds 100%
                     if (totalAllocation > 1) {
-                        document.getElementById('avgExitPrice').innerHTML = '<span class="error-message">ERROR</span>';
+                        document.getElementById('avgExitPrice').innerHTML = '<span class="error-message">ERROR</span>'; // Set error message
                         return;
                     }
 
@@ -367,28 +493,38 @@
                 document.querySelectorAll('.input-box').forEach((input, idx) => {
                     input.addEventListener('blur', function () {
                         if (idx < 3) {
-                            const value = parseFloat(input.value) || 0;
-                            input.value = formatPercentage(value);
-                        } else {
-                            const value = parseFloat(input.value.replace('$', '')) || 0;
-                            input.value = formatDollar(value);
+                            const
+                            const value = parseFloat(input.value.replace('$', '').replace('%', '')) || 0;
+                            if (idx % 2 === 0) {
+                                input.value = formatPercentage(value); // Format as percentage
+                            } else {
+                                input.value = formatDollar(value); // Format as dollar
+                            }
                         }
-                        calculateAverageExitPrice();
+                        calculateAverageExitPrice(); // Recalculate average exit price on blur
                     });
                 });
             </script>
         </div>
-        </div>
-        <script>
-            function showTab(tabNumber) {
-                const tabs = document.querySelectorAll('.tab-content');
-                const tabElements = document.querySelectorAll('.tab');
+    </div>
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.content');
 
-                tabs.forEach((tab, index) => {
-                    tab.classList.toggle('hidden', index + 1 !== tabNumber);
-                    tabElements[index].classList.toggle('active', index + 1 === tabNumber);
-                });
-            }
-        </script>
-    </body>
+            tabs.forEach((tab) => {
+                tab.classList.remove('active');
+                tab.classList.add('inactive');
+            });
+
+            contents.forEach((content) => {
+                content.style.display = 'none';
+            });
+
+            document.querySelector(`.tab:contains(${tabId})`).classList.add('active');
+            document.querySelector(`.tab:contains(${tabId})`).classList.remove('inactive');
+            document.getElementById(tabId).style.display = 'block';
+        }
+    </script>
+</body>
 </html>
