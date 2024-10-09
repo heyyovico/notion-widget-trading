@@ -4,7 +4,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
   * {
-    box-sizing: border-box; /* Ensures padding and borders are included in the total width/height */
+    box-sizing: border-box;
   }
 
   .container {
@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin-top: 20px;
-    width: 700px;
+    width: 600px; /* Adjusted width */
   }
 
   .row {
@@ -20,18 +20,18 @@
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 10px; /* Consistent row spacing */
+    margin-bottom: 8px; /* Adjusted margin for consistent row spacing */
   }
 
   .label-box-container {
     background-color: #fff;
     border-radius: 6px;
     padding: 8px;
-    width: 180px; /* Label width */
+    width: 180px;
     border: 1px solid #dcdcdc;
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Added margin for spacing */
+    margin-right: 10px;
   }
 
   .label-box-container i {
@@ -46,23 +46,19 @@
     color: #333;
   }
 
-  .input-box {
+  .input-box, .reset-btn {
     background-color: #fff;
     border-radius: 6px;
     border: 1px solid #dcdcdc;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 14px; /* Same font size as input boxes */
+    font-size: 14px;
     color: #000;
-    margin-right: 10px; /* Use consistent spacing */
-    width: 150px; /* Standardized width */
-    height: 35px; /* Standardized height */
-    padding: 6px; /* Standardized padding */
-  }
-
-  .input-box:focus {
-    color: #000;
+    margin-right: 10px;
+    width: 150px;
+    height: 35px;
+    padding: 6px;
   }
 
   .result-box {
@@ -72,31 +68,37 @@
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-weight: bold; /* Bold font style */
-    font-size: 14px; /* Same font size as input boxes */
+    font-size: 14px;
     color: #000;
-    margin-right: 10px; /* Use consistent spacing */
-    width: 150px; /* Standardized width */
-    height: 35px; /* Standardized height */
-    padding: 6px; /* Standardized padding */
+    width: 150px;
+    height: 35px;
+    padding: 6px;
+    margin-right: 10px;
   }
 
-  .reset-icon {
-    color: #a0a0a0; /* Light grey color */
-    cursor: pointer;
-    font-size: 20px; /* Icon size */
-    transition: color 0.3s;
+  .input-box:focus {
+    color: #000;
   }
 
-  .reset-icon:hover {
-    color: #8c8c8c; /* Darker grey on hover */
+  .reset-btn {
+    background-color: black; /* Changed to black */
+    color: white; /* Text color white */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+  }
+
+  .reset-btn i {
+    margin-right: 10px;
   }
 
   .spacer {
     width: 20px;
   }
 
-  .row:not(:last-child) {
-    margin-bottom: 8px; /* Adjusted margin for spacing */
+  .row:last-child {
+    margin-top: 10px; /* Adjusted margin for last row */
   }
 </style>
 
@@ -118,7 +120,10 @@
   <div class="row">
     <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
     <div class="result-box" id="avgExitPrice">0.000</div>
-    <div class="reset-icon" onclick="clearInputs()">
+  </div>
+
+  <div class="row" style="margin-top: 10px;">
+    <div class="reset-btn" onclick="clearInputs()">
       <i class="fas fa-sync-alt"></i>
     </div>
   </div>
