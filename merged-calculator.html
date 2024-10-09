@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .tab:hover {
+            background-color: #f0f0f0;
+        }
+        .tab.active {
+            border-bottom: 2px solid #007BFF;
+            color: #007BFF;
+        }
+        .calculator {
+            display: none;
+        }
+        .calculator.active {
+            display: block;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .reset-icon {
+            color: grey;
+            cursor: pointer;
+            font-size: 20px;
+            float: right;
+            transition: color 0.3s;
+        }
+        .reset-icon:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="showCalculator('profit')">Total Profit</button>
+            <button class="tab" onclick="showCalculator('average')">Average Exit Price</button>
+        </div>
+
+        <div id="profit" class="calculator active">
+            <h2>Total Profit Calculator</h2>
+            <input type="number" id="initialInvestment" placeholder="Initial Investment">
+            <input type="number" id="exitPrice" placeholder="Exit Price">
+            <input type="number" id="numberOfShares" placeholder="Number of Shares">
+            <span class="reset-icon" onclick="resetProfit()">🔄</span>
+            <button onclick="calculateProfit()">Calculate Profit</button>
+            <div id="profitResult"></div>
+        </div>
+
+        <div id="average" class="calculator">
+            <h2>Average Exit Price Calculator</h2>
+            <input type="number" id="totalSales" placeholder="Total Sales">
+            <input type="number" id="numberOfTransactions" placeholder="Number of Transactions">
+            <span class="reset-icon" onclick="resetAverage()">🔄</span>
+            <button onclick="calculateAverage()">Calculate Average Exit Price</button>
+            <div id="averageResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function showCalculator(calculator) {
+            const calculators = document.querySelectorAll('.calculator');
+            const tabs = document.querySelectorAll('.tab');
+
+            calculators.forEach(calc => {
+                calc.classList.remove('active');
+            });
+
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById(calculator).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function calculateProfit() {
+            const initialInvestment = parseFloat(document.getElementById('initialInvestment').value) || 0;
+            const exitPrice = parseFloat(document.getElementById('exitPrice').value) || 0;
+            const numberOfShares = parseFloat(document.getElementById('numberOfShares').value) || 0;
+
+            const profit = (exitPrice - initialInvestment) * numberOfShares;
+            document.getElementById('profitResult').textContent = `Total Profit: $${profit.toFixed(2)}`;
+        }
+
+        function calculateAverage() {
+            const totalSales = parseFloat(document.getElementById('totalSales').value) || 0;
+            const numberOfTransactions = parseFloat(document.getElementById('numberOfTransactions').value) || 0;
+
+            const averageExitPrice = numberOfTransactions ? totalSales / numberOfTransactions : 0;
+            document.getElementById('averageResult').textContent = `Average Exit Price: $${averageExitPrice.toFixed(2)}`;
+        }
+
+        function resetProfit() {
+            document.getElementById('initialInvestment').value = '';
+            document.getElementById('exitPrice').value = '';
+            document.getElementById('numberOfShares').value = '';
+            document.getElementById('profitResult').textContent = '';
+        }
+
+        function resetAverage() {
+            document.getElementById('totalSales').value = '';
+            document.getElementById('numberOfTransactions').value = '';
+            document.getElementById('averageResult').textContent = '';
+        }
+    </script>
+</body>
+</html>
