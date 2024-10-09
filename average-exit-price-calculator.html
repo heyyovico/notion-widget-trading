@@ -1,189 +1,113 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Widget</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM/0hP6vH9cGVB0zEgbG6GpTxDJz5tvH/qj3cz" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 400px;
+            margin: auto;
+        }
 
-  * {
-    box-sizing: border-box; /* Ensures padding and borders are included in the total width/height */
-  }
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
-    width: 700px;
-  }
+        .label-box {
+            width: 150px; /* Same width for all labels */
+            height: 35px; /* Same height as the reset button */
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
 
-  .row {
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 10px; /* Consistent row spacing */
-  }
+        .placeholder-box {
+            width: 150px; /* Same size for placeholder boxes */
+            height: 35px; /* Same height */
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
 
-  .label-box-container {
-    background-color: #fff;
-    border-radius: 6px;
-    padding: 8px;
-    width: 180px; /* Label width */
-    border: 1px solid #dcdcdc;
-    display: flex;
-    align-items: center;
-    margin-right: 10px; /* Added margin for spacing */
-  }
+        /* Reset Button Styles */
+        .reset-btn {
+            background-color: #000;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #dcdcdc;
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            width: 150px; /* Adjusted to match label width */
+            height: 35px; /* Same height as the placeholder boxes */
+            justify-content: flex-start; /* Align text to the left */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
 
-  .label-box-container i {
-    margin-right: 8px;
-    font-size: 14px;
-  }
+        .reset-btn:hover {
+            background-color: #d3d3d3; /* Light gray hover effect */
+        }
 
-  .label-box-container span {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
-  }
-
-  .input-box, .reset-btn {
-    background-color: #fff;
-    border-radius: 6px;
-    border: 1px solid #dcdcdc;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    color: #000;
-    margin-right: 10px; /* Use consistent spacing */
-    width: 150px; /* Standardized width */
-    height: 35px; /* Standardized height */
-    padding: 6px; /* Standardized padding */
-  }
-
-  .result-box {
-    background-color: #fff;
-    border-radius: 6px;
-    border: 1px solid #dcdcdc;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 14px; /* Same font size as input boxes */
-    color: #000;
-    width: 150px; /* Match width to input boxes */
-    height: 35px; /* Match height to input boxes */
-    padding: 6px; /* Match padding to input boxes */
-    margin-right: 10px; /* Use consistent spacing */
-  }
-
-  .input-box:focus {
-    color: #000;
-  }
-
-  .reset-btn {
-    background-color: #000;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-  }
-
-  .reset-btn i {
-    margin-right: 10px;
-  }
-
-  .spacer {
-    width: 20px;
-  }
-
-  .row:last-child {
-    margin-top: 15px;
-  }
-</style>
-
-<div class="container">
-  <div class="row">
-    <div class="label-box-container"><i class="fas fa-percentage"></i> <span>Allocation</span></div>
-    <input class="input-box" type="text" id="allocation1" placeholder="%">
-    <input class="input-box" type="text" id="allocation2" placeholder="%">
-    <input class="input-box" type="text" id="allocation3" placeholder="%">
-  </div>
-
-  <div class="row">
-    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Exit Price</span></div>
-    <input class="input-box" type="text" id="exitPrice1" placeholder="0.000">
-    <input class="input-box" type="text" id="exitPrice2" placeholder="0.000">
-    <input class="input-box" type="text" id="exitPrice3" placeholder="0.000">
-  </div>
-
-  <div class="row">
-    <div class="label-box-container"><i class="fas fa-calculator"></i> <span>Average Exit Price</span></div>
-    <div class="result-box" id="avgExitPrice">0.000</div>
-  </div>
-
-  <div class="row" style="margin-top: 10px;">
-    <div class="reset-btn" onclick="clearInputs()">
-      <i class="fas fa-sync-alt"></i>
-      Reset
+        .reset-btn:active {
+            background-color: #a9a9a9; /* Darker gray on click for effect */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="label-box">Entry Price</div>
+            <div class="placeholder-box" id="entryPriceBox"></div>
+        </div>
+        <div class="row">
+            <div class="label-box">Average Exit Price</div>
+            <div class="placeholder-box" id="averageExitPriceBox"></div>
+        </div>
+        <div class="row">
+            <div class="label-box">Amount</div>
+            <div class="placeholder-box" id="amountBox"></div>
+        </div>
+        <div class="row">
+            <div class="label-box">Position Size</div>
+            <div class="placeholder-box" id="positionSizeBox"></div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="reset-btn" onclick="clearInputs()">
+                <i class="fas fa-sync-alt"></i>
+                Reset
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-  function clearInputs() {
-    document.getElementById('allocation1').value = '';
-    document.getElementById('allocation2').value = '';
-    document.getElementById('allocation3').value = '';
-    document.getElementById('exitPrice1').value = '';
-    document.getElementById('exitPrice2').value = '';
-    document.getElementById('exitPrice3').value = '';
-    document.getElementById('avgExitPrice').innerText = '0.000';
-  }
-
-  function formatToPercentage(value) {
-    if (value < 1 && value !== 0) {
-      return (value * 100).toFixed(1) + '%';
-    } else {
-      return parseFloat(value).toFixed(1) + '%';
-    }
-  }
-
-  function calculateAverageExitPrice() {
-    const allocations = [
-      parseFloat(document.getElementById('allocation1').value) || 0,
-      parseFloat(document.getElementById('allocation2').value) || 0,
-      parseFloat(document.getElementById('allocation3').value) || 0
-    ];
-
-    const exitPrices = [
-      parseFloat(document.getElementById('exitPrice1').value) || 0,
-      parseFloat(document.getElementById('exitPrice2').value) || 0,
-      parseFloat(document.getElementById('exitPrice3').value) || 0
-    ];
-
-    let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
-
-    if (totalAllocation === 0) {
-      document.getElementById('avgExitPrice').innerText = '0.000';
-      return;
-    }
-
-    let weightedSum = 0;
-    for (let i = 0; i < allocations.length; i++) {
-      weightedSum += allocations[i] * exitPrices[i];
-    }
-
-    let avgExitPrice = weightedSum / totalAllocation;
-    document.getElementById('avgExitPrice').innerText = avgExitPrice.toFixed(3);
-  }
-
-  document.querySelectorAll('.input-box').forEach((input, idx) => {
-    input.addEventListener('input', function () {
-      if (idx < 3) {
-        input.value = formatToPercentage(parseFloat(input.value) || 0);
-      }
-      calculateAverageExitPrice();
-    });
-  });
-</script>
+    <script>
+        function clearInputs() {
+            document.getElementById("entryPriceBox").innerText = "";
+            document.getElementById("averageExitPriceBox").innerText = "";
+            document.getElementById("amountBox").innerText = "";
+            document.getElementById("positionSizeBox").innerText = "";
+        }
+    </script>
+</body>
+</html>
