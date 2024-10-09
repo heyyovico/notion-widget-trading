@@ -87,6 +87,8 @@
 
   .result-box {
     font-weight: bold;
+    padding: 6px;
+    border: 1px solid #dcdcdc; /* Adding border for better visibility */
   }
 
   .bubble {
@@ -98,10 +100,18 @@
     font-size: 12px;
     opacity: 0;
     transition: opacity 0.3s ease;
+    font-family: 'Inter', sans-serif; /* Match font style */
   }
 
   .bubble.show {
     opacity: 1;
+  }
+
+  /* Styles for the bubble positioning */
+  .bubble-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px; /* Adjust margin for space */
   }
 </style>
 
@@ -121,17 +131,20 @@
   </div>
 
   <div class="row">
-    <div class="label-box-container" style="background-color: black; color: white;">
+    <div class="label-box-container" style="background-color: white; color: black;">
       <i class="fas fa-calculator"></i> <span>Average Exit Price</span>
     </div>
-    <div class="result-box" id="avgExitPrice">0.000</div>
-    <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
-    <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+    <div class="result-box" id="avgExitPrice">$0.000</div>
+    <div class="bubble-container">
+      <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+      <div id="resetBubble" class="bubble"></div>
+    </div>
+    <div class="bubble-container">
+      <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+      <div id="copyBubble" class="bubble"></div>
+    </div>
   </div>
 </div>
-
-<!-- Bubble for copy/clear -->
-<div id="bubble" class="bubble"></div>
 
 <script>
   function clearInputs() {
@@ -141,8 +154,8 @@
     document.getElementById('exitPrice1').value = '';
     document.getElementById('exitPrice2').value = '';
     document.getElementById('exitPrice3').value = '';
-    document.getElementById('avgExitPrice').innerText = '0.000';
-    showBubble('Cleared!');
+    document.getElementById('avgExitPrice').innerText = '$0.000';
+    showBubble('Cleared!', 'resetBubble');
   }
 
   function copyResult() {
@@ -153,44 +166,48 @@
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
-    showBubble('Copied!');
+    showBubble('Copied!', 'copyBubble');
   }
 
-  function showBubble(message) {
-    const bubble = document.getElementById('bubble');
+  function showBubble(message, bubbleId) {
+    const bubble = document.getElementById(bubbleId);
     bubble.innerText = message;
     bubble.classList.add('show');
-    
+
     setTimeout(() => {
       bubble.classList.remove('show');
     }, 1000);
   }
 
   function formatPercentage(value) {
-    if (value > 1) {
-      return value.toFixed(0) + '%';
+    if (value >= 1) {
+      return value.toFixed(0) + '%'; // Keep the percentage format for whole numbers
     } else {
-      return (value * 100).toFixed(0) + '%';
+      return (value * 100).toFixed(0) + '%'; // Format decimal to percentage
     }
+  }
+
+  function formatDollar(value) {
+    return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
   }
 
   function calculateAverageExitPrice() {
     const allocations = [
-      parseFloat(document.getElementById('allocation1').value) || 0,
-      parseFloat(document.getElementById('allocation2').value) || 0,
-      parseFloat(document.getElementById('allocation3').value) || 0
+      parseFloat(document.getElementById('allocation1').value) / 100 || 0,
+      parseFloat(document.getElementById('allocation2').value) / 100 || 0,
+      parseFloat(document.getElementById('allocation3').value) / 100 || 0
     ];
 
     const exitPrices = [
-      parseFloat(document.getElementById('exitPrice1').value) || 0,
-      parseFloat(document.getElementById('exitPrice2').value) || 0,
-      parseFloat(document.getElementById('exitPrice3').value) || 0
+      parseFloat(document.getElementById('exitPrice1').value.replace('$', '')) || 0,
+      parseFloat(document.getElementById('exitPrice2').value.replace('$', '')) || 0,
+      parseFloat(document.getElementById('exitPrice3').value.replace('$', '')) || 0
     ];
 
     let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
 
     if (totalAllocation === 0) {
-      document.getElementById('avgExitPrice').innerText = '0.000';
+      document.getElementById('avgExitPrice').innerText = '$0.000';
       return;
     }
 
@@ -200,13 +217,16 @@
     }
 
     let avgExitPrice = weightedSum / totalAllocation;
-    document.getElementById('avgExitPrice').innerText = avgExitPrice.toFixed(3);
+    document.getElementById('avgExitPrice').innerText = formatDollar(avgExitPrice);
   }
 
   document.querySelectorAll('.input-box').forEach((input, idx) => {
     input.addEventListener('input', function () {
       if (idx < 3) {
-        input.value = formatPercentage(parseFloat(input.value) || 0);
+        const value = parseFloat(input.value) || 0;
+        input.value = formatPercentage(value);
+      } else {
+        input.value = '$' + (parseFloat(input.value.replace('$', '')) || 0).toFixed(2); // Format dollar input
       }
       calculateAverageExitPrice();
     });
