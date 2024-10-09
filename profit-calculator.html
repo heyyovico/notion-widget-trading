@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin-top: 20px;
-    width: 670px;
+    width: 450px; /* Updated total width of the container */
   }
 
   .row {
@@ -56,7 +56,7 @@
     font-size: 14px;
     color: #000;
     margin-right: 10px;
-    width: 150px;
+    width: 100px; /* Adjusted width of input and result boxes */
     height: 35px;
     padding: 6px;
   }
@@ -115,85 +115,3 @@
     margin-left: 5px; /* Adjust margin for space */
   }
 </style>
-
-<div class="container">
-  <div class="row">
-    <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price</span></div>
-    <input class="input-box" type="text" id="takeProfit1" placeholder="$0.00">
-    <input class="input-box" type="text" id="takeProfit2" placeholder="$0.00">
-    <input class="input-box" type="text" id="takeProfit3" placeholder="$0.00">
-  </div>
-
-  <div class="row">
-    <div class="label-box-container" style="background-color: white; color: black;">
-      <i class="fas fa-calculator"></i> <span>Total Profit</span>
-    </div>
-    <div class="result-box" id="totalProfit">$0.00</div>
-    <div class="bubble-container">
-      <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
-      <div id="copyBubble" class="bubble"></div>
-    </div>
-    <div class="bubble-container">
-      <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
-      <div id="resetBubble" class="bubble"></div>
-    </div>
-  </div>
-</div>
-
-<script>
-  function clearInputs() {
-    document.getElementById('takeProfit1').value = '';
-    document.getElementById('takeProfit2').value = '';
-    document.getElementById('takeProfit3').value = '';
-    document.getElementById('totalProfit').innerText = '$0.00'; // Reset total profit to $0.00
-    showBubble('Cleared!', 'resetBubble');
-    calculateTotalProfit(); // Update total profit after clearing
-  }
-
-  function copyResult() {
-    const resultText = document.getElementById('totalProfit').innerText;
-    const tempInput = document.createElement('input');
-    tempInput.value = resultText;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    showBubble('Copied!', 'copyBubble');
-  }
-
-  function showBubble(message, bubbleId) {
-    const bubble = document.getElementById(bubbleId);
-    bubble.innerText = message;
-    bubble.classList.add('show');
-
-    setTimeout(() => {
-      bubble.classList.remove('show');
-    }, 1000);
-  }
-
-  function formatDollar(value) {
-    return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
-  }
-
-  function calculateTotalProfit() {
-    const takeProfits = [
-      parseFloat(document.getElementById('takeProfit1').value.replace('$', '')) || 0,
-      parseFloat(document.getElementById('takeProfit2').value.replace('$', '')) || 0,
-      parseFloat(document.getElementById('takeProfit3').value.replace('$', '')) || 0
-    ];
-
-    // Calculate total profit
-    const totalProfit = takeProfits.reduce((sum, val) => sum + val, 0);
-    document.getElementById('totalProfit').innerText = formatDollar(totalProfit);
-  }
-
-  document.querySelectorAll('.input-box').forEach((input) => {
-    input.addEventListener('blur', function () {
-      const value = parseFloat(input.value.replace('$', '')) || 0;
-      input.value = formatDollar(value); // Format as dollar when losing focus
-      calculateTotalProfit(); // Update total profit
-    });
-    
-    input.addEventListener('input', calculateTotalProfit); // Calculate on input change
-  });
-</script>
