@@ -221,12 +221,13 @@
   }
 
   document.querySelectorAll('.input-box').forEach((input, idx) => {
-    input.addEventListener('input', function () {
+    input.addEventListener('blur', function () {
       if (idx < 3) {
         const value = parseFloat(input.value) || 0;
         input.value = formatPercentage(value);
       } else {
-        input.value = '$' + (parseFloat(input.value.replace('$', '')) || 0).toFixed(2); // Format dollar input
+        const value = parseFloat(input.value.replace('$', '')) || 0;
+        input.value = formatDollar(value);
       }
       calculateAverageExitPrice();
     });
