@@ -1,176 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Tabbed Widget</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+<div class="container" style="width: 650px; background-color: transparent;">
 
-        * {
-            box-sizing: border-box;
-        }
+    <!-- Button Tabs -->
+    <div class="button-tabs">
+        <div class="button-tab active" onclick="showTab('totalProfit')">Total Profit</div>
+        <div class="button-tab" onclick="showTab('averageExitPrice')">Average Exit Price</div>
+    </div>
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-top: 20px;
-            width: 650px; /* Reduced width of the container */
-        }
-
-        .tabs {
-            display: flex;
-            cursor: pointer;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            background: #f1f1f1;
-            margin-right: 2px;
-            border: 1px solid #ccc;
-            border-bottom: none;
-            font-family: 'Inter', sans-serif;
-            font-weight: bold; /* Bold font style for tabs */
-            font-size: 14px; /* Font size for tabs */
-        }
-
-        .tab:hover {
-            background: #e0e0e0;
-        }
-
-        .tab.active {
-            background: white;
-            border-top: 2px solid #007bff;
-        }
-
-        .tab-content {
-            border: 1px solid #ccc;
-            padding: 20px;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .row {
-            display: flex;
-            width: 100%;
-            justify-content: flex-start;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .label-box-container {
-            background-color: #fff;
-            border-radius: 6px;
-            padding: 8px;
-            width: 160px; /* Increased width to fit label */
-            border: 1px solid #dcdcdc;
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-
-        .label-box-container i {
-            margin-right: 8px;
-            font-size: 14px;
-        }
-
-        .label-box-container span {
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .input-box, .result-box {
-            background-color: #fff;
-            border-radius: 6px;
-            border: 1px solid #dcdcdc;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            font-size: 14px;
-            color: #000;
-            margin-right: 10px;
-            width: 90px; /* Reduced width for input boxes */
-            height: 35px;
-            padding: 6px;
-        }
-
-        .input-box:focus {
-            outline: none;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Minimalist black shadow effect */
-        }
-
-        .input-box:focus::placeholder {
-            color: transparent;
-        }
-
-        .reset-btn, .copy-btn {
-            background-color: transparent;
-            color: grey;
-            border: none;
-            cursor: pointer;
-            margin-right: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px; /* Increased icon size */
-        }
-
-        .reset-btn:hover, .copy-btn:hover {
-            color: #333;
-        }
-
-        .result-box {
-            font-weight: bold;
-            padding: 6px;
-            border: 1px solid #dcdcdc; /* Adding border for better visibility */
-        }
-
-        .error-message {
-            color: red; /* Set text color to red */
-            font-weight: bold; /* Set text to bold */
-            font-family: 'Inter', sans-serif; /* Use the same font as others */
-        }
-
-        .bubble {
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.75);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            font-family: 'Inter', sans-serif; /* Match font style */
-        }
-
-        .bubble.show {
-            opacity: 1;
-        }
-
-        /* Styles for the bubble positioning */
-        .bubble-container {
-            position: relative;
-            display: inline-block;
-            margin-left: 5px; /* Adjust margin for space */
-        }
-    </style>
-</head>
-<body>
-
-<div class="tabs">
-    <div class="tab active" onclick="openTab(event, 'totalProfit')">Total Profit</div>
-    <div class="tab" onclick="openTab(event, 'averageExitPrice')">Average Exit Price</div>
-</div>
-
-<div id="totalProfit" class="tab-content active">
-    <!DOCTYPE html>
+    <!-- Tab Content -->
+    <div id="totalProfit" class="tab-content"><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -376,10 +213,9 @@
 
 </body>
 </html>
-</div>
-
-<div id="averageExitPrice" class="tab-content">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </div>
+    <div id="averageExitPrice" class="tab-content" style="display: none;">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -625,23 +461,29 @@
     });
   });
 </script>
+    </div>
+
 </div>
 
 <script>
-    function openTab(event, tabName) {
+    function showTab(tabName) {
         // Hide all tab contents
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(content => content.classList.remove('active'));
-
-        // Remove active class from all tabs
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(tab => tab.classList.remove('active'));
-
-        // Show the selected tab content and set it as active
-        document.getElementById(tabName).classList.add('active');
-        event.currentTarget.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.style.display = 'none';
+        });
+        
+        // Remove active class from all buttons
+        document.querySelectorAll('.button-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Show the selected tab content
+        document.getElementById(tabName).style.display = 'block';
+        
+        // Add active class to the clicked button
+        event.target.classList.add('active');
     }
-</script>
 
-</body>
-</html>
+    // Optionally, call the function to show the default tab on page load
+    showTab('totalProfit');
+</script>
