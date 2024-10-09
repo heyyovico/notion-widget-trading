@@ -70,7 +70,7 @@
     color: transparent;
   }
 
-  .calculate-btn {
+  .calculate-btn, .copy-btn, .reset-btn {
     background-color: #4CAF50; /* Green */
     color: white;
     border: none;
@@ -79,9 +79,10 @@
     border-radius: 6px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
+    margin-right: 5px; /* Space between buttons */
   }
 
-  .calculate-btn:hover {
+  .calculate-btn:hover, .copy-btn:hover, .reset-btn:hover {
     background-color: #45a049; /* Darker green */
   }
 
@@ -130,17 +131,19 @@
 <div class="container">
   <div class="row">
     <div class="label-box-container"><i class="fas fa-dollar-sign"></i> <span>Take Profit Price</span></div>
-    <input class="input-box" type="text" id="takeProfitPrice1" placeholder="$0.00">
-    <input class="input-box" type="text" id="takeProfitPrice2" placeholder="$0.00">
-    <input class="input-box" type="text" id="takeProfitPrice3" placeholder="$0.00">
+    <input class="input-box" type="text" id="takeProfitPrice1" placeholder="$0.00" oninput="calculateProfit()">
+    <input class="input-box" type="text" id="takeProfitPrice2" placeholder="$0.00" oninput="calculateProfit()">
+    <input class="input-box" type="text" id="takeProfitPrice3" placeholder="$0.00" oninput="calculateProfit()">
   </div>
 
   <div class="row">
     <div class="label-box-container" style="background-color: white; color: black;">
-      <i class="fas fa-calculator"></i> <span>Profit</span>
+      <i class="fas fa-calculator"></i> <span>Total Profit</span>
     </div>
     <div class="result-box" id="profitResult">$0.00</div>
     <button class="calculate-btn" onclick="calculateProfit()">Calculate</button>
+    <button class="copy-btn" onclick="copyResult()">Copy</button>
+    <button class="reset-btn" onclick="resetCalculator()">Reset</button>
   </div>
 
   <div class="row">
@@ -165,12 +168,23 @@
     // Example calculation (sum of Take Profit Prices)
     const totalProfit = takeProfitPrices.reduce((sum, val) => sum + val, 0);
     
-    // Check if all inputs are zero
-    if (totalProfit === 0) {
-      document.getElementById('profitResult').innerText = '$0.00';
-      return;
-    }
-
+    // Update the result box automatically
     document.getElementById('profitResult').innerText = formatDollar(totalProfit);
+  }
+
+  function copyResult() {
+    const result = document.getElementById('profitResult').innerText;
+    navigator.clipboard.writeText(result).then(() => {
+      alert('Total Profit copied to clipboard: ' + result);
+    }).catch(err => {
+      console.error('Error copying text: ', err);
+    });
+  }
+
+  function resetCalculator() {
+    document.getElementById('takeProfitPrice1').value = '';
+    document.getElementById('takeProfitPrice2').value = '';
+    document.getElementById('takeProfitPrice3').value = '';
+    document.getElementById('profitResult').innerText = '$0.00';
   }
 </script>
