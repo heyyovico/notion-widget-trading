@@ -203,8 +203,9 @@
     }
   }
 
-  function formatDollar(value) {
-    return '$' + parseFloat(value).toFixed(2); // Format dollar amounts
+function formatDollar(value) {
+  const formattedValue = Math.abs(value).toFixed(2); // Format value to two decimal places
+  return value < 0 ? `-$${formattedValue}` : `$${formattedValue}`; // Conditionally format based on negative value
   }
 
   function calculateAverageExitPrice() {
