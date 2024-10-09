@@ -7,7 +7,7 @@
 
     <!-- Tab Content -->
     <div id="totalProfit" class="tab-content">
-       <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -102,6 +102,29 @@
             padding: 6px;
             border: 1px solid #dcdcdc; /* Adding border for better visibility */
         }
+
+        .bubble {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-family: 'Inter', sans-serif; /* Match font style */
+        }
+
+        .bubble.show {
+            opacity: 1;
+        }
+
+        /* Styles for the bubble positioning */
+        .bubble-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px; /* Adjust margin for space */
+        }
     </style>
 </head>
 <body>
@@ -119,8 +142,14 @@
             <i class="fas fa-calculator"></i> <span>Total Profit</span>
         </div>
         <div class="result-box" id="totalProfit">$0.00</div>
-        <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
-        <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+        <div class="bubble-container">
+            <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+            <div id="copyBubble" class="bubble"></div>
+        </div>
+        <div class="bubble-container">
+            <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+            <div id="resetBubble" class="bubble"></div>
+        </div>
     </div>
 </div>
 
@@ -130,6 +159,7 @@
         document.getElementById('takeProfit2').value = '';
         document.getElementById('takeProfit3').value = '';
         document.getElementById('totalProfit').innerText = '$0.00'; // Reset total profit to $0.00
+        showBubble('Cleared!', 'resetBubble');
         calculateTotalProfit(); // Update total profit after clearing
     }
 
@@ -141,6 +171,17 @@
         tempInput.select();
         document.execCommand('copy');
         document.body.removeChild(tempInput);
+        showBubble('Copied!', 'copyBubble');
+    }
+
+    function showBubble(message, bubbleId) {
+        const bubble = document.getElementById(bubbleId);
+        bubble.innerText = message;
+        bubble.classList.add('show');
+
+        setTimeout(() => {
+            bubble.classList.remove('show');
+        }, 1000);
     }
 
     function formatDollar(value) {
@@ -273,6 +314,29 @@
     font-weight: bold; /* Set text to bold */
     font-family: 'Inter', sans-serif; /* Use the same font as others */
   }
+
+  .bubble {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-family: 'Inter', sans-serif; /* Match font style */
+  }
+
+  .bubble.show {
+    opacity: 1;
+  }
+
+  /* Styles for the bubble positioning */
+  .bubble-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px; /* Adjust margin for space */
+  }
 </style>
 
 <div class="container">
@@ -295,9 +359,11 @@
     <div class="result-box" id="avgExitPrice">$0.00</div>
     <div class="bubble-container">
       <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
+      <div id="copyBubble" class="bubble"></div>
     </div>
     <div class="bubble-container">
       <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+      <div id="resetBubble" class="bubble"></div>
     </div>
   </div>
 </div>
@@ -311,6 +377,7 @@
     document.getElementById('exitPrice2').value = '';
     document.getElementById('exitPrice3').value = '';
     document.getElementById('avgExitPrice').innerText = '$0.00'; // Changed to 2 decimal places
+    showBubble('Cleared!', 'resetBubble');
   }
 
   function copyResult() {
@@ -321,6 +388,17 @@
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
+    showBubble('Copied!', 'copyBubble');
+  }
+
+  function showBubble(message, bubbleId) {
+    const bubble = document.getElementById(bubbleId);
+    bubble.innerText = message;
+    bubble.classList.add('show');
+
+    setTimeout(() => {
+      bubble.classList.remove('show');
+    }, 1000);
   }
 
   function formatPercentage(value) {
