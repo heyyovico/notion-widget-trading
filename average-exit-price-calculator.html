@@ -79,6 +79,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 18px; /* Increased icon size */
   }
 
   .reset-btn:hover, .copy-btn:hover {
@@ -134,14 +135,14 @@
     <div class="label-box-container" style="background-color: white; color: black;">
       <i class="fas fa-calculator"></i> <span>Average Exit Price</span>
     </div>
-    <div class="result-box" id="avgExitPrice">$0.000</div>
-    <div class="bubble-container">
-      <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
-      <div id="resetBubble" class="bubble"></div>
-    </div>
+    <div class="result-box" id="avgExitPrice">$0.00</div>
     <div class="bubble-container">
       <button class="copy-btn" onclick="copyResult()"><i class="fas fa-copy"></i></button>
       <div id="copyBubble" class="bubble"></div>
+    </div>
+    <div class="bubble-container">
+      <button class="reset-btn" onclick="clearInputs()"><i class="fas fa-sync-alt"></i></button>
+      <div id="resetBubble" class="bubble"></div>
     </div>
   </div>
 </div>
@@ -154,7 +155,7 @@
     document.getElementById('exitPrice1').value = '';
     document.getElementById('exitPrice2').value = '';
     document.getElementById('exitPrice3').value = '';
-    document.getElementById('avgExitPrice').innerText = '$0.000';
+    document.getElementById('avgExitPrice').innerText = '$0.00'; // Changed to 2 decimal places
     showBubble('Cleared!', 'resetBubble');
   }
 
@@ -206,8 +207,14 @@
 
     let totalAllocation = allocations.reduce((sum, val) => sum + val, 0);
 
+    // Check if total allocation exceeds 100%
+    if (totalAllocation > 1) {
+      document.getElementById('avgExitPrice').innerText = 'Error: Total allocation exceeds 100%';
+      return;
+    }
+
     if (totalAllocation === 0) {
-      document.getElementById('avgExitPrice').innerText = '$0.000';
+      document.getElementById('avgExitPrice').innerText = '$0.00';
       return;
     }
 
