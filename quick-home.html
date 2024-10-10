@@ -6,6 +6,8 @@
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    margin: 0;
+    padding: 0;
   }
 
   .custom-box {
@@ -18,12 +20,12 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-weight: bold;
     font-size: 14px;
-    margin: 5px; /* Uniform margin */
+    margin: 0; /* Removed margin */
     border: 1px solid #e0e0e0; /* Light border for subtle definition */
     transition: background-color 0.2s ease-in-out;
     display: flex;
     align-items: center;
-    width: auto; /* Allow width to adjust based on content */
+    width: auto;
     min-width: 100px; /* Optional: set a minimum width */
   }
 
@@ -33,6 +35,12 @@
 
   .custom-box:hover, .custom-box.active {
     background-color: #f0f0f0; /* Same background color on hover and active */
+  }
+
+  /* Optional: reset margin and padding for body if that's affecting layout */
+  body {
+    margin: 0;
+    padding: 0;
   }
 </style>
 
