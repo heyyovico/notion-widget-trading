@@ -27,20 +27,27 @@
             'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Market%20Bias_Side%20-%20Down.svg',
             'https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/No%20Bias.svg' // Added No Bias image
         ];
-        
-        let currentIndex = 0; // Start with the first image
+
+        // Retrieve the last index from localStorage or default to 0
+        let currentIndex = parseInt(localStorage.getItem("currentImageIndex")) || 0;
 
         // Function to change the image when clicked
         function showNextImage() {
             currentIndex = (currentIndex + 1) % images.length; // Loop back to the first image
             document.getElementById("imageContainer").src = images[currentIndex];
+            localStorage.setItem("currentImageIndex", currentIndex); // Save the current index to localStorage
         }
+
+        // Set the initial image on page load
+        window.onload = () => {
+            document.getElementById("imageContainer").src = images[currentIndex];
+        };
     </script>
 </head>
 <body>
 
     <!-- Image container to display the selected image -->
-    <img id="imageContainer" src="https://raw.githubusercontent.com/heyyovico/notion-widget-trading/main/Market%20Bias_Side%20-%20Up.svg" alt="Side / Up" onclick="showNextImage()">
+    <img id="imageContainer" src="" alt="Side / Up" onclick="showNextImage()">
 
 </body>
 </html>
